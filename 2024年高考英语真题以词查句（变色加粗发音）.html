@@ -1,0 +1,789 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>2024年高考真题以词查句</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        header, footer {
+            text-align: center;
+            width: 100%;
+        }
+        #searchArea {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 10px 0;
+        }
+        .audio {
+            cursor: pointer;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>2024年高考真题以词查句</h1>
+    </header>
+
+    <div id="searchArea">
+        <input type="text" id="searchInput" placeholder="输入词或短语">
+        <button onclick="searchText()">搜索</button>
+    </div>
+
+    <div id="results"></div>
+
+    <footer>
+        微信公众号：熊猫李English工作室
+    </footer>
+
+    <script>
+        const text = `Thanks for the wonderful weekend, Kate.*谢谢你美妙的周末，Kate。*2024年新1卷
+That’s okay. Bob and I are glad you came to see us.*没关系。Bob和我很高兴你来看我们。*2024年新1卷
+Oh, I have to go in. My flight will take off soon.*哦，我得走了。我的航班很快就要起飞了。*2024年新1卷
+Do contact me when you’re in Sydney.*你到悉尼时请联系我。*2024年新1卷
+Sure, we will.*当然，我们会的。*2024年新1卷
+Paul, listen to the radio. It’s You’ve Stolen My Heart, one of the songs played at our wedding.*Paul，听收音机。这是在我们婚礼上播放的歌曲之一"You’ve Stolen My Heart"。*2024年新1卷
+Yeah. How beautiful! It’s been popular for almost two decades.*是的，多么美啊！它已经流行了将近二十年。*2024年新1卷
+David, forget about Mark. His aunt is in town, so he can’t go with us today.*David，忘了Mark吧。他的姑姑在城里，所以他今天不能和我们一起去。*2024年新1卷
+Ah, what a pity! It’s the last day of the art show.*啊，真遗憾！这是艺术展的最后一天。*2024年新1卷
+How may I help you?*我能帮您什么忙吗？*2024年新1卷
+I bought a desk and asked for it to be delivered to my house this Friday.*我买了一张桌子，要求这周五送到我家。*2024年新1卷
+I need to have it delivered this Saturday.*我需要它在这个周六送到。*2024年新1卷
+Next, please.*下一位，请。*2024年新1卷
+Oh, hi. I missed my nine o’clock train to Bedford. Do I have to buy another ticket?*哦，嗨。我错过了去Bedford的九点钟火车。我需要再买一张票吗？*2024年新1卷
+No. The next train leaves at a quarter to ten at platform eleven.*不需要。下一班车在10点差一刻离开，在11号站台。*2024年新1卷
+Thank you.*谢谢。*2024年新1卷
+Honey, have you checked today’s weather forecast?*亲爱的，你查看了今天的天气预报吗？*2024年新1卷
+Yes, it’s cold and wet. There is a warning for strong winds up to a hundred kilometers per hour.*是的，天气又冷又湿。有风速高达每小时一百公里的强风警告。*2024年新1卷
+What are we going to do then?*那我们该怎么办？*2024年新1卷
+Nothing much, just stay indoors. There is a risk of falling trees and power lines.*没什么，只是待在室内。有树木和电线倒塌的风险。*2024年新1卷
+Right. And the low temperatures could bring snow to the forest area.*好的。低温可能会给森林地区带来降雪。*2024年新1卷
+I hope it’s over quickly.*我希望它很快结束。*2024年新1卷
+Well, it won’t get better until late Wednesday.*嗯，直到周三晚些时候天气才会好转。*2024年新1卷
+Anyway, I have to move the car away from the trees.*无论如何，我得把车从树旁边移开。*2024年新1卷
+Yeah, you cannot be too careful.*是的，你不能太不小心。*2024年新1卷
+Hello Dave. This is Cathy from sunny California.*你好Dave，这是来自阳光明媚的加利福尼亚的Cathy。*2024年新1卷
+Hi Cathy. You finally called. How was the move? All settled in?*嗨Cathy。你终于打电话来了。搬家怎么样？都安顿好了吗？*2024年新1卷
+Sorry I hadn’t called sooner, but it’s been a busy month. We’re slowly getting things set up in our new home.*对不起我没有早点打电话，但这一个月很忙。我们正在新家慢慢安顿下来。*2024年新1卷
+Jeff is doing well with his new job. Tom has made many new friends here and has a lot to do. Fiona is fine, though she misses her grandma.*Jeff在新工作上做得很好。Tom在这里交了很多新朋友，有很多事要做。Fiona很好，尽管她想念她的奶奶。*2024年新1卷
+By the way, thank you for looking in on my mother from time to time. I call her every week, but it isn’t the same as seeing her.*顺便说一下，感谢你时不时地看望我的母亲。我每周都给她打电话，但这和见到她不一样。*2024年新1卷
+No problem. Betty and I are friends now. How is the weather there?*没问题。Betty和我现在是朋友了。那里的天气怎么样？*2024年新1卷
+It’s nice and warm, and we are able to spend some time every week on the beach with the children.*天气很好很暖和，我们每周都能在海滩上和孩子们度过一些时间。*2024年新1卷
+Jack, how did you get to school when you were in primary school?*Jack，你上小学的时候怎么去学校的？*2024年新1卷
+I lived close to my school, so I walked every day.*我住在学校附近，所以我每天走路去。*2024年新1卷
+These days, you can see traffic jams around schools at drop-off and pick-up times, but it’s hard to blame the parents.*这些天，你可以看到学校在接送时间周围交通堵塞，但很难责怪父母。*2024年新1卷
+They have good reasons for driving their kids to school, mostly to do with safety and convenience.*他们开车送孩子去学校有充分的理由，主要是出于安全和方便。*2024年新1卷
+You have a point there, but it could also mean children are missing out on much-needed exercise and other life skills.*你说得有道理，但这也可能意味着孩子们错过了非常需要的锻炼和其他生活技能。*2024年新1卷
+Some parents are just being overprotective, with their children learning nothing but living in fear of everything.*有些父母只是过度保护，他们的孩子除了生活在对一切事物的恐惧中之外什么也没学到。*2024年新1卷
+Studies have found that children who spend more time outside tend to be healthier, better adjusted and better at dealing with stress.*研究发现，花更多时间在户外的孩子们往往更健康，适应得更好，更能应对压力。*2024年新1卷
+So, Marie, your kitchen garden looks excellent. What made you turn to social media to record your vegetable growing?*那么，Marie，你的厨房花园看起来很棒。是什么让你转向社交媒体来记录你的蔬菜种植？*2024年新1卷
+Initially, I used the online platform as a diary, something to look back on, giving me a sense of achievement and keeping me motivated and moving forward.*最初，我使用在线平台作为日记，作为回顾的东西，给我一种成就感，并让我保持动力和前进。*2024年新1卷
+Strawberries would be a good choice. They produce a lot of fruit in their first season.*草莓是一个很好的选择。它们在第一季就产生很多果实。*2024年新1卷
+Next season, I will be adding some pear trees to the fruit area. I will be adding more herbs which I can use in the kitchen.*下一季，我将在水果区增加一些梨树。我还会添加更多的香草，这些香草我可以在厨房使用。*2024年新1卷
+And, after a couple of years of failure, I will try growing carrots again.*经过几年的失败后，我会再次尝试种植胡萝卜。*2024年新1卷
+Have a plan of what you want your kitchen garden to look like. Don’t be too discouraged if things don’t go according to plan.*为你的厨房花园想要的样子制定一个计划。如果事情没有按照计划进行，不要太气馁。*2024年新1卷
+Learn from your mistakes and move on. There is always next season.*从错误中学习并继续前进。总有下一个季节。*2024年新1卷
+HABITAT RESTORATION TEAM*生态修复团队*2024年新1卷
+Help restore and protect Marin's natural areas from the Marin Headlands to Bolinas Ridge.*帮助恢复和保护从马林海角到博利纳斯岭的马林自然区域。*2024年新1卷
+We'll explore beautiful park sites while conducting invasive plant removal, winter planting, and seed collection.*我们将在进行入侵性植物清除、冬季种植和种子收集的同时，探索美丽的公园景点。*2024年新1卷
+Habitat Restoration Team volunteers play a vital role in restoring sensitive resources and protecting endangered species across the ridges and valleys.*生态修复团队的志愿者在恢复敏感资源和保护山脊和山谷中的濒危物种方面发挥着至关重要的作用。*2024年新1卷
+Groups of five or more require special arrangements and must be confirmed in advance.*五人或以上的团体需要特殊安排，并且必须提前确认。*2024年新1卷
+Please review the List of Available Projects and fill out the Group Project Request Form.*请查看可用项目清单并填写团体项目请求表。*2024年新1卷
+Volunteers aged 10 and over are welcome.*欢迎10岁及以上的志愿者参加。*2024年新1卷
+Read our Youth Policy Guidelines for youth under the age of 15.*阅读我们针对15岁以下青少年的青少年政策指南。*2024年新1卷
+Bring your completed Volunteer Agreement Form.*带上你完成的志愿者协议表格。*2024年新1卷
+Volunteers under the age of 18 must have the parent/guardian approval section signed.*18岁以下的志愿者必须有家长/监护人批准的部分签字。*2024年新1卷
+We'll be working rain or shine.*我们将风雨无阻地工作。*2024年新1卷
+Wear clothes that can get dirty.*穿可以弄脏的衣服。*2024年新1卷
+Bring layers for changing weather and a raincoat if necessary.*根据天气变化带多层衣物，必要时带上雨衣。*2024年新1卷
+Bring a personal water bottle, sunscreen, and lunch.*带个人水壶、防晒霜和午餐。*2024年新1卷
+No experience necessary. Training and tools will be provided.*无需经验。 提供培训和工具。*2024年新1卷
+Fulfills community service requirements.*满足社区服务要求。*2024年新1卷
+Time Meeting Location*时间 会面地点*2024年新1卷
+Sunday, Jan. 15 10:00 am-1:00 pm Battery Alexander Trailhead*星期日，1月15日 上午10:00-下午1:00 亚历山大炮台小径起点*2024年新1卷
+Sunday, Jan. 22 10:00 am-2:30 pm Stinson Beach Parking Lot*星期日，1月22日 上午10:00-下午2:30 斯坦森海滩停车场*2024年新1卷
+Sunday, Jan. 29 9:30 am-2:30 pm Coyote Ridge Trailhead*星期日，1月29日 上午9:30-下午2:30 土狼岭小径起点*2024年新1卷
+“I am not crazy,” says Dr. William Farber, shortly after performing acupuncture on a rabbit.*“我没有疯，”威廉·法伯博士在给一只兔子做过针灸后说。*2024年新1卷
+"I am ahead of my time."*"我超前于我的时代。"*2024年新1卷
+If he seems a little defensive, it might be because even some of his coworkers occasionally laugh at his unusual methods.*如果他看起来有点防御性，那可能是因为他的一些同事偶尔嘲笑他不寻常的方法。*2024年新1卷
+But Farber is certain he'll have the last laugh.*但法伯确信他将是最后笑的人。*2024年新1卷
+He's one of a small but growing number of American veterinarians now practicing "holistic" medicine.*他是越来越多美国兽医中的一员，目前正在实践“整体”医学。*2024年新1卷
+combining traditional Western treatments with acupuncture, chiropractic and herbal medicine.*结合传统的西方治疗、针灸、按摩疗法和草药医学。*2024年新1卷
+Farber, a graduate of Colorado State University, started out as a more conventional veterinarian.*法伯是科罗拉多州立大学的毕业生，起初是一个更传统的兽医。*2024年新1卷
+He became interested in alternative treatments 20 years ago when he suffered from terrible back pain.*20年前，当他遭受严重的背痛时，他对替代疗法产生了兴趣。*2024年新1卷
+He tried muscle-relaxing drugs but found little relief.*他尝试了肌肉松弛药物，但几乎没有缓解。*2024年新1卷
+Then he tried acupuncture, an ancient Chinese practice, and was amazed that he improved after two or three treatments.*然后他尝试了针灸，这是一种古老的中国实践，他对两三治疗后就有所改善感到惊讶。*2024年新1卷
+What worked on a veterinarian seemed likely to work on his patients.*一位兽医有效的方法似乎也很可能对他的病人有效。*2024年新1卷
+So, after studying the techniques for a couple of years, he began offering them to pets.*因此，在研究了这些技术几年之后，他开始向宠物提供它们。*2024年新1卷
+Leigh Tindale's dog Charlie had a serious heart condition.*Leigh Tindale的狗Charlie有严重的心脏病。*2024年新1卷
+After Charlie had a heart attack, Tindale says, she was prepared to put him to sleep, but Farber's treatments eased her dog's suffering so much that she was able to keep him alive for an additional five months.*Tindale说，在Charlie心脏病发作后，她准备让他安乐死，但是法伯的治疗方法大大缓解了她狗的痛苦，使她能够再让他活了五个月。*2024年新1卷
+And Priscilla Dewing reports that her horse, Nappy, "moves more easily and rides more comfortably" after a chiropractic adjustment.*Priscilla Dewing报告说，经过按摩疗法调整后，她的马Nappy“移动更容易，骑行更舒适”。*2024年新1卷
+Farber is certain that the holistic approach will grow more popular with time, and if the past is any indication, he may be right:*法伯确信，随着时间的推移，整体方法会越来越受欢迎，如果过去有任何迹象的话，他可能是对的：*2024年新1卷
+Since 1982, membership in the American Holistic Veterinary Medical Association has grown from 30 to over 700.*自1982年以来，美国整体兽医医学协会的会员人数从30增加到700多。*2024年新1卷
+“Sometimes it surprises me that it works so well,” he says. “I will do anything to help an animal. That's my job.”*“有时它的效果这么好让我感到惊讶，”他说。“我会尽一切努力帮助动物。那是我的工作。”*2024年新1卷
+Is comprehension the same whether a person reads a text onscreen or on paper?*无论是在屏幕上还是在纸上阅读文本，理解程度是否相同？*2024年新1卷
+And are listening to and viewing content as effective as reading the written word when covering the same material?*并且当涵盖相同材料时，听和观看内容是否和阅读书面文字一样有效？*2024年新1卷
+The answers to both questions are often “no.”*这两个问题的答案通常都是“不”。*2024年新1卷
+The reasons relate to a variety of factors, including reduced concentration, an entertainment mindset and a tendency to multitask while consuming digital content.*原因涉及多种因素，包括降低的注意力、娱乐心态以及在消费数字内容时倾向于多任务处理。*2024年新1卷
+When reading texts of several hundred words or more, learning is generally more successful when it's on paper than onscreen.*当阅读数百字或更多的文本时，通常在纸上阅读比在屏幕上更成功。*2024年新1卷
+A large amount of research confirms this finding.*大量的研究表明了这一点。*2024年新1卷
+The benefits of print reading particularly shine through when experimenters move from posing simple tasks to ones that require mental abstraction.*当实验者从提出简单任务转向需要精神抽象的任务时，印刷阅读的好处尤其明显。*2024年新1卷
+The differences between print and digital reading results are partly related to paper's physical properties.*印刷和数字阅读结果之间的差异部分与纸张的物理属性有关。*2024年新1卷
+With paper, there is a literal laying on of hands, along with the visual geography of distinct pages.*使用纸张，有字面意义上的动手，以及不同页面的视觉地理。*2024年新1卷
+People often link their memory of what they've read to how far into the book it was or where it was on the page.*人们经常将他们对所阅读内容的记忆与书中的位置或页面上的位置联系起来。*2024年新1卷
+But equally important is the mental aspect.*但同样重要的是心理方面。*2024年新1卷
+Reading researchers have proposed a theory called "shallowing hypothesis,"*阅读研究人员提出了一个名为“浅层化假说”的理论，*2024年新1卷
+According to this theory, people approach digital texts with a mindset suited to social media, which are often not so serious, and devote less mental effort than when they are reading print.*根据这一理论，人们以适合社交媒体的心态来接触数字文本，这些通常不太严肃，并且比阅读印刷品时投入的精力更少。*2024年新1卷
+Audio and video can feel more engaging than text, and so university teachers increasingly turn to these technologies.*音频和视频可能比文本更具吸引力，因此大学教师越来越多地转向这些技术。*2024年新1卷
+However, psychologists have demonstrated that when adults read news stories, they remember more of the content than if they listen to or view identical pieces.*然而，心理学家已经证明，当成年人阅读新闻故事时，他们记住的内容比如果他们听或看相同的内容要多。*2024年新1卷
+Digital texts, audio and video all have educational roles, especially when providing resources not available in print.*数字文本、音频和视频都有教育作用，特别是当提供印刷品中没有的资源时。*2024年新1卷
+However, for maximizing learning where mental focus and reflection are called for, educators shouldn't assume all media are the same, even when they contain identical words.*然而，在需要精神集中和反思的学习中，教育者不应假设所有媒体都是一样的，即使它们包含相同的话语。*2024年新1卷
+In the race to document the species on Earth before they go extinct, researchers and citizen scientists have collected billions of records.*在记录地球上的物种在灭绝之前的竞争中，研究人员和公民科学家已经收集了数十亿条记录。*2024年新1卷
+Today, most records of biodiversity are often in the form of photos, videos, and other digital records.*今天，大多数生物多样性的记录通常以照片、视频和其他数字记录的形式存在。*2024年新1卷
+Though they are useful for detecting shifts in the number and variety of species in an area, a new Stanford study has found that this type of record is not perfect.*尽管它们对于检测一个区域内物种数量和种类的变化很有用，但斯坦福大学的一项新研究发现，这种类型的记录并不完美。*2024年新1卷
+“With the rise of technology it is easy for people to make observations of different species with the aid of a mobile application,” said Barnabas Daru, who is lead author of the study and assistant professor of biology in the Stanford School of Humanities and Sciences.*“随着技术的发展，人们可以很容易地借助移动应用程序观察不同物种，”该研究的主要作者、斯坦福大学人文与科学学院生物学助理教授Barnabas Daru说。*2024年新1卷
+“These observations now outnumber the primary data that comes from physical specimens, and since we are increasingly using observational data to investigate how species are responding to global change, I wanted to know: Are they usable?”*“这些观察现在超过了来自物理标本的主要数据，并且由于我们越来越多地使用观察数据来调查物种如何应对全球变化，我想知道：它们是否可用？”*2024年新1卷
+Using a global dataset of 1.9 billion records of plants, insects, birds, and animals, Daru and his team tested how well these data represent actual global biodiversity patterns.*Daru和他的团队使用了一个包含19亿植物、昆虫、鸟类和动物记录的全球数据集，测试了这些数据在多大程度上代表了实际的全球生物多样性模式。*2024年新1卷
+“We were particularly interested in exploring the aspects of sampling that tend to bias data, like the greater likelihood of a citizen scientist to take a picture of a flowering plant instead of the grass right next to it,” said Daru.*“我们特别感兴趣的是探索那些倾向于使数据产生偏差的抽样方面，比如公民科学家更有可能拍摄开花植物的照片，而不是它旁边的草，”Daru说。*2024年新1卷
+Their study revealed that the large number of observation-only records did not lead to better global coverage.*他们的研究揭示了仅观察记录的大量数据并没有带来更好的全球覆盖。*2024年新1卷
+Moreover, these data are biased and favor certain regions, time periods, and species.*此外，这些数据是有偏见的，偏爱某些地区、时间段和物种。*2024年新1卷
+This makes sense because the people who get observational biodiversity data on mobile devices are often citizen scientists recording their encounters with species in areas nearby.*这是有道理的，因为那些在移动设备上获取观察性生物多样性数据的人通常是公民科学家，记录他们在附近地区与物种的相遇。*2024年新1卷
+These data are also biased toward certain species with attractive or eye-catching features.*这些数据还偏向具有吸引力或引人注目特征的某些物种。*2024年新1卷
+“Quite a lot,” Daru explained. “Biodiversity apps can use our study results to inform users of oversampled areas and lead them to places -and even species- that are not well-sampled.*“非常多，”Daru解释说。“生物多样性应用程序可以使用我们的研究结果来告知用户过度采样的区域，并引导他们到采样不足的地方——甚至是物种。*2024年新1卷
+To improve the quality of observational data, biodiversity apps can also encourage users to have an expert confirm the identification of their uploaded image.”*为了提高观察数据的质量，生物多样性应用程序还可以鼓励用户让专家确认他们上传图像的鉴定。*2024年新1卷
+Not all great writers are great spellers. If you want to be published,*并非所有伟大的作家都擅长拼写。如果你想被出版，*2024年新1卷
+it's vital to submit a perfect, professionally presented manuscript.*至关重要的是提交一份完美、专业呈现的手稿。*2024年新1卷
+F. It takes no account of the context.*F. 它不考虑上下文。*2024年新1卷
+I keep two reference books close-by on my desk: dictionary and thesaurus.*我的桌子上总是放着两本参考书：字典和同义词词典。*2024年新1卷
+I don't trust my laptop's spellchecker.*我不信任我笔记本电脑的拼写检查器。*2024年新1卷
+B. But I still don't want to replace them.*B. 但我仍然不想替换它们。*2024年新1卷
+Of course, these days there are plenty of online dictionaries and thesauruses,*当然，如今有许多在线字典和同义词词典，*2024年新1卷
+but I'm old-fashioned enough to prefer a hard cover and pages I can leaf through with my fingers.*但我还是更喜欢传统的硬封面书和可以翻阅的书页。*2024年新1卷
+It should give you a precise definition of each word, thus differentiating it from other words whose meanings are similar, but not identical.*它应该给你每个词的精确定义，以区分那些意思相似但并不完全相同的词。*2024年新1卷
+E. Of course, a dictionary is not only for spelling.*E. 当然，字典不仅仅是用来拼写的。*2024年新1卷
+In addition, I have an old two-volume copy of the Shorter Oxford Dictionary,*另外，我有一本旧的《简明牛津词典》两卷本，*2024年新1卷
+picked up a few years ago in a bookshop sale for just 99 pence.*几年前在书店的特卖中只花了99便士就买到了。*2024年新1卷
+A. I don't often use this dictionary.*A. 我不经常使用这本字典。*2024年新1卷
+However, if I need to check the origin of a word or to look up examples of its usage, there's nothing better.*然而，当我需要查找一个词的起源或其用法的例子时，没有比这更好的了。*2024年新1卷
+“To make dictionaries is dull work,” wrote Johnson, illustrating one definition of “dull”.*“编字典是乏味的工作，”约翰逊写道，阐释了“乏味”的一个定义。*2024年新1卷
+D. But a dictionary can be a pleasure to read.*D. 但字典阅读起来也是一种乐趣。*2024年新1卷
+A few minutes spent casting your eye over a page or two can be a rewarding experience.*花几分钟浏览一两页可以是一种有益的体验。*2024年新1卷
+I've been motivated-and demotivated-by other folks' achievements all my life.*我一生中一直被其他人的成就所激励和打击。*2024年新1卷
+When I was a teenager, a neighborhood friend won a marathon race.*当我还是个青少年的时候，一个邻居朋友赢得了一场马拉松比赛。*2024年新1卷
+Feeling motivated, I started running but then two things happened.*受到激励，我开始跑步但接着发生了两件事。*2024年新1卷
+First, a girl I met one day was training for a “super,” referring to a 52.4-mile double marathon.*第一，我一天遇到的一个女孩正在训练一个“超级”，指的是一个52.4英里的双马拉松。*2024年新1卷
+Then, the next day I went on my longest run—15 miles. To be honest, I hated it!*然后，第二天我进行了最长的一次跑步—15英里。说实话，我讨厌它！*2024年新1卷
+Between the girl making my achievement seem small and the pure boredom of jogging, I decided that the only way I'd ever run again is if a big dog was running after me!*在那个女孩使我的成就感到渺小和慢跑的纯粹无聊之间，我决定唯一的方式我会再次跑步，就是如果有一只大狗在我后面追！*2024年新1卷
+So I turned to cycling.*所以我转向了骑行。*2024年新1卷
+I got a good bike and rode a lot.*我买了一辆好自行车，骑了很多。*2024年新1卷
+I dreamed of entering cycle races until I flew to San Diego to visit my sister.*我梦想着参加自行车比赛，直到我飞往圣地亚哥去看望我的妹妹。*2024年新1卷
+While she was at work one day, I borrowed her bike and went for a ride.*当她有一天在工作时，我借了她的自行车去兜风。*2024年新1卷
+The challenges: The roads there went through large valleys where I'd be riding uphill for miles at a time.*挑战：那里的道路穿过我得一次骑行数英里的大山谷。*2024年新1卷
+I'd never faced such opponents.*我从未面对过这样的对手。*2024年新1卷
+That day, I got passed by about 100 local bikers who were used to such roads.*那天，我被大约100名习惯这种道路的当地自行车手超过。*2024年新1卷
+When I got back home, suddenly riding my bike didn't seem quite as appealing.*当我回到家时，突然间骑自行车看起来不再那么吸引人。*2024年新1卷
+I've matured a lot since then.*从那以后，我成熟了很多。*2024年新1卷
+I've come to accept that whatever goals I set for myself, they just have to be my own.*我逐渐接受，无论我为自己设定什么目标，它们必须是我自己的。*2024年新1卷
+Heanherwick Studio recently built a greenhouse at the edge of the National Trust's Woolbeding Gardens.*Heatherwick工作室最近在国家信托的Woolbeding花园边缘建造了一个温室。*2024年新1卷
+This beautiful structure, named Glasshouse, is at the centre of a new garden that shows how the Silk Road influences English gardens even in modern times.*这个被称为Glasshouse的美丽结构，位于一个新花园的中心，展示了丝绸之路即使在现代也如何影响英国花园。*2024年新1卷
+The latest engineering techniques are applied to create this protective structure that is also beautiful.*最新的工程技术被应用来创造这个既美观又具有保护性的结构。*2024年新1卷
+The design features ten steel “sepals” made of glass and aluminium.*设计特点是由玻璃和铝制成的十个钢制“萼片”。*2024年新1卷
+These sepals open on warm days to give the inside plants sunshine and fresh air.*这些萼片在温暖的日子提供内部植物阳光和新鲜空气。*2024年新1卷
+In cold weather, the structure stays closed to protect the plants.*在寒冷的天气里，结构保持关闭以保护植物。*2024年新1卷
+Further, the Silk Route Garden around the greenhouse walks visitors through a journey influenced by the ancient Silk Road.*此外，温室周围的丝绸之路花园走过游客通过一个受古代丝绸之路影响的旅程。*2024年新1卷
+These plants included modern Western favourites such as rosemary, lavender and fennel.*这些植物包括现代西方最爱的迷迭香、薰衣草和茴香。*2024年新1卷
+The garden also contains a winding path that guides visitors through the twelve regions of the Silk Road.*花园还有一个蜿蜒的小径，引导游客穿越丝绸之路的十二个地区。*2024年新1卷
+The path offers over 300 plant species for visitors to see, too.*这条小径还提供了300多种植物供游客观赏。*2024年新1卷
+The Glasshouse stands as a great achievement in contemporary design, to house the plants of the southwestern part of China at the end of a path retracing the steps along the Silk Route.*Glasshouse作为当代设计的一个伟大成就存在，在中国西南部的植物在追溯丝绸之路的步骤的小径尽头。*2024年新1卷
+...that brought the plants from their native habitat in Asia to come to define much of the richness of gardening in England.*...那将植物从它们在亚洲的原生栖息地带到定义英国园艺的丰富性。*2024年新1卷
+I met Gunter on a cold, wet and unforgettable evening in September.*我在九月一个寒冷、潮湿且难忘的晚上遇见了冈特。*2024年新1卷
+I had planned to fly to Vienna and take a bus to Prague for a conference.*我计划乘飞机去维也纳，然后乘公共汽车去布拉格参加会议。*2024年新1卷
+Due to a big storm, my flight had been delayed by an hour and a half.*由于一场大风暴，我的航班延误了一个半小时。*2024年新1卷
+I touched down in Vienna just 30 minutes before the departure of the last bus to Prague.*我在开往布拉格的最后一班公共汽车出发前30分钟抵达维也纳。*2024年新1卷
+The moment I got off the plane, I ran like crazy through the airport building and jumped into the first taxi on the rank without a second thought.*我一下飞机，就不顾一切地跑过机场大楼，毫不犹豫地跳上了排队的第一辆出租车。*2024年新1卷
+That was when I met Gunter.*就在那时我遇到了冈特。*2024年新1卷
+I told him where I was going, but he said he hadn't heard of the bus station.*我告诉他我要去哪里，但他说他没听说过那个公交站。*2024年新1卷
+I thought my pronunciation was the problem, so I explained again more slowly, but he still looked confused.*我以为是我的发音问题，所以我又慢解释了一遍，但他仍然看起来很困惑。*2024年新1卷
+When I was about to give up, Gunter fished out his little phone and rang up a friend.*当我即将放弃时，冈特掏出他的小手机给一个朋友打电话。*2024年新1卷
+After a heated discussion that lasted for what seemed like a century, Gunter put his phone down and started the car.*经过一段看似一个世纪的热烈讨论后，冈特放下电话发动了汽车。*2024年新1卷
+Finally, with just two minutes to spare, we rolled into the bus station.*最后，我们提前两分钟到达了公交车站。*2024年新1卷
+Thankfully, there was a long queue still waiting to board the bus.*谢天谢地，还有一长队人在等待上车。*2024年新1卷
+Gunter parked the taxi behind the bus, turned around, and looked at me with a big smile on his face. "We made it," he said.*冈特把出租车停在公共汽车后面，转过身来，脸上带着灿烂的笑容看着我说：“我们做到了。”*2024年新1卷
+Did you watch the talent show on TV last night?*你昨晚看电视台的才艺表演了吗？*2024年新2卷
+No. I missed it. I went with my mom to buy some clothes.*没有。我错过了。我陪妈妈去买衣服了。*2024年新2卷
+I love this park. It’s so beautiful.*我爱这个公园。它真美。*2024年新2卷
+Are you tired? Shall we stop by the lake for a few minutes?*你累了吗？我们在湖边休息几分钟好吗？*2024年新2卷
+Good idea. Let’s go to that café for a little refreshment.*好主意。我们去那家咖啡馆喝点东西吧。*2024年新2卷
+Tom, shall we invite the Smiths around for dinner this Sunday?*汤姆，我们这周日邀请史密斯一家来吃晚饭好吗？*2024年新2卷
+Sure, but I need to pack for Monday’s business trip. What about Saturday?*当然可以，但我需要为周一的出差打包。周六怎么样？*2024年新2卷
+Okay.*好的。*2024年新2卷
+Barbara, do you want to play table tennis with us tonight?*芭芭拉，今晚你想和我们打乒乓球吗？*2024年新2卷
+I’d love to, but I can’t. I’m catching the last train to Denver to see my grandma.*我很想，但我不能。我要赶最后一班火车去丹佛看我奶奶。*2024年新2卷
+I’m catching the last train to Denver to see my grandma. I need to take her to visit a doctor tomorrow morning.*我要赶最后一班火车去丹佛看望我奶奶。我需要明早带她去看医生。*2024年新2卷
+Alex, did you feed the cat this morning? I don’t think she can wait.*亚历克斯，你今天早上喂猫了吗？我认为她等不及了。*2024年新2卷
+All right, after I finish this chapter. I just can’t let go of this book.*好的，等我读完这一章。我就是放不下这本书。*2024年新2卷
+Miss, do you need any help?*小姐，你需要帮助吗？*2024年新2卷
+I want to get fit, but exercise doesn’t seem to help.*我想变得健康，但锻炼似乎没有帮助。*2024年新2卷
+What kind of exercise have you done before?*你以前做过什么样的锻炼？*2024年新2卷
+I did jogging now and then, but it was so boring.*我时不时地慢跑，但它太无聊了。*2024年新2卷
+So, I changed to weightlifting, but it was so demanding.*所以我改做举重，但这太要求人了。*2024年新2卷
+And I was afraid of getting injured. So, I went bike riding.*我害怕受伤。所以，我去骑自行车了。*2024年新2卷
+You need to be consistent. I suggest you do different kinds of exercise on one day, or on different days of the week.*你需要保持一致性。我建议你在一天内或一周的不同天做不同类型的运动。*2024年新2卷
+This will help hold your interest, so you can keep coming back.*这将帮助你保持兴趣，这样你就可以持续回来。*2024年新2卷
+Hi, I’d like to book a table for Friday evening.*嗨，我想预订周五晚上的一张桌子。*2024年新2卷
+Okay. How many people are there in your party?*好的。你们一共有多少人？*2024年新2卷
+There will be six. And what time would you like to come?*将会有六个人。你们想什么时候来？*2024年新2卷
+Let’s say at, 6:30? I’m afraid we don’t have anything available then.*比如说6:30？恐怕那时候我们没有空位。*2024年新2卷
+We could see you at 5:30 or 8 o’clock. Oh, 8 o’clock is better.*我们5:30或8点可以为您安排。哦，8点更好。*2024年新2卷
+May I have your name? Yes. It’s Anderson.*能告诉我您的名字吗？是的，我叫安德森。*2024年新2卷
+Jacob, do you have a minute now? Sure.*雅各布，你现在有空吗？当然。*2024年新2卷
+You’re not in our group, for the class project.*你不在我们小组，负责课堂项目。*2024年新2卷
+I know. It’s just that this time, we made the group differently.*我知道。只是这次，我们以不同的方式组建了小组。*2024年新2卷
+Professor North said there should be no more than four people in each group.*诺斯教授说每个小组的人数不应超过四个人。*2024年新2卷
+There is a music concert in Victoria Park at 4 o’clock. Do you want to go?*维多利亚公园下午4点有一场音乐会。你想一起去吗？*2024年新2卷
+Yes. Professor Darwin’s lecture is cancelled. I’m free this evening.*是的。达尔文教授的讲座取消了。我今晚有空。*2024年新2卷
+Every year they arrive the first week of July and play for a week.*每年他们在7月的第一周到达，然后演奏一周。*2024年新2卷
+We have to go now. Many people are heading to the park. The traffic will be terrible.*我们现在得走了。许多人正前往公园。交通会很糟糕。*2024年新2卷
+The Carlow Autumn Walking Festival is a great opportunity for the beginner, experienced or advanced walker to enjoy the challenges of Carlow's mountain hikes or the peace of its woodland walks.*卡洛秋季徒步节对于初学者、有经验的或高级徒步者来说是一个很好的机会，可以享受卡洛山区徒步的挑战或其林地步行的宁静。*2024年新2卷
+With environmentalist Éanna Lamhna as the guide, this walk promises to be an informative tour.*由环保主义者Éanna Lamhna作为向导，这次徒步承诺会是一次内容丰富的游览。*2024年新2卷
+Walkers are sure to learn lots about the habitats and natural world of the Blackstairs.*徒步者肯定会了解到很多关于Blackstairs的栖息地和自然世界的知识。*2024年新2卷
+Date and Time: Saturday, 1st October, at 09:00*日期和时间：10月1日星期六，上午9:00*2024年新2卷
+Start Point: Scratches Bridge*起点：Scratches桥*2024年新2卷
+Walk Duration: 6 hours*徒步持续时间：6小时*2024年新2卷
+Emmanuel Chappard, an experienced guide, has a passion for making the great outdoors accessible to all.*埃马纽埃尔·查帕德是一位经验丰富的向导，他热衷于让所有人都能接触大自然。*2024年新2卷
+This mountain walk provides an insight into the skills required for hillwalking to ensure you get the most from future walking trips.*这次山地徒步旅行提供了对山地行走所需技能的深入了解，以确保您在未来的徒步旅行中获得最大的收获。*2024年新2卷
+Date and Time: Sunday, 2nd October, at 09:00*日期和时间：10月2日星期日，上午9:00*2024年新2卷
+Start Point: Deerpark Car Park*起点：Deerpark停车场*2024年新2卷
+Walk Duration: 5 hours*徒步持续时间：5小时*2024年新2卷
+Walking at night-time is a great way to step out of your comfort zone.*在夜晚行走是走出你的舒适区的一个好方法。*2024年新2卷
+Breathtaking views of the lowlands of Carlow can be enjoyed in the presence of welcoming guides from local walking clubs.*在当地徒步俱乐部热情的向导的陪伴下，可以享受到卡洛低地令人屏息的美景。*2024年新2卷
+A torch along with suitable clothing is essential for walking in the dark.*手电筒和合适的衣服对于夜间行走是必不可少的。*2024年新2卷
+Those who are dressed inappropriately will be refused permission to participate.*穿着不当的人将被拒绝参加。*2024年新2卷
+Date and Time: Saturday, 1st October, at 18:30*日期和时间：10月1日星期六，下午6:30*2024年新2卷
+Start Point: The Town Hall*起点：市政厅*2024年新2卷
+Walk Duration: 3 hours*徒步持续时间：3小时*2024年新2卷
+This informative walk led by Richard Smyth introduces you to the basic principles of photography in the wild.*由Richard Smyth带领的这次知识性徒步向您介绍野外摄影的基本原则。*2024年新2卷
+Bring along your camera and enjoy the wonderful views along this well-surfaced forest path.*带上你的相机，享受这条路况良好的森林小道上的美妙景色。*2024年新2卷
+Date and Time: Sunday, 2nd October, at 11:45*日期和时间：10月2日星期日，上午11:45*2024年新2卷
+Start Point: Kilbrannish Forest Recreation Area*起点：Kilbrannish森林休闲区*2024年新2卷
+Walk Duration: 1.5 hours*徒步持续时间：1.5小时*2024年新2卷
+21. Which walk takes the shortest time?*21. 哪条徒步路线耗时最短？*2024年新2卷
+A. The Natural World.*A. 自然世界。*2024年新2卷
+B. Introduction to Hillwalking.*B. 山地徒步介绍。*2024年新2卷
+C. Moonlight Under the Stars.*C. 星空下的月光。*2024年新2卷
+D. Photographic Walk in Kilbrannish Forest.*D. 基尔布兰尼什森林摄影步行。*2024年新2卷
+22. What are participants in Walk 3 required to do?*22. 第三徒步的参与者需要做什么？*2024年新2卷
+A. Wear proper clothes.*A. 穿合适的衣服。*2024年新2卷
+B. Join a walking club.*B. 加入徒步俱乐部。*2024年新2卷
+C. Get special permits.*C. 获取特别许可。*2024年新2卷
+D. Bring a survival guide.*D. 带上生存指南。*2024年新2卷
+23. What do the four walks have in common?*23. 这四条徒步路线有什么共同点？*2024年新2卷
+A. They involve difficult climbing.*A. 它们涉及困难的攀登。*2024年新2卷
+B. They are for experienced walkers.*B. 它们是为有经验的徒步者准备的。*2024年新2卷
+C. They share the same start point.*C. 它们共享相同的起点。*2024年新2卷
+D. They are scheduled for the weekend.*D. 它们都安排在周末。*2024年新2卷
+Do you ever get to the train station and realize you forgot to bring something to read?*你是否曾到达火车站才意识到忘记带东西阅读？*2024年新2卷
+Yes, we all have our phones, but many of us still like to go old school and read something printed.*是的，我们都有手机，但我们中的许多人仍然喜欢回归传统，阅读一些印刷物。*2024年新2卷
+"You enter the fare gates and you'll see a kiosk that is lit up and it tells you can get a one-minute, a three-minute, or a five-minute story," says Alicia Trost, the chief communications officer for the San Francisco Bay Area Rapid Transit - known as BART.*旧金山湾区快速交通系统（即BART）的首席通信官艾丽西亚·特罗斯特说：“你通过检票口，会看到一个点亮的小亭子，它告诉你可以获得一分钟、三分钟或五分钟的故事。”*2024年新2卷
+"You choose which length you want and it gives you a receipt-like short story."*“你选择你想要的长度，它会给出一个收据样式的短故事。”*2024年新2卷
+Riders have printed nearly 20,000 short stories and poems since the program was launched last March.*自从去年三月份该计划启动以来，乘客们已经打印了近20,000篇短篇故事和诗歌。*2024年新2卷
+Some are classic short stories, and some are new original works.*其中一些是经典短篇故事，还有一些是新创作的原创作品。*2024年新2卷
+Trost also wants to introduce local writers to local riders.*特罗斯特还希望将当地作家介绍给当地乘客。*2024年新2卷
+"We wanted to do something where we do a call to artists in the Bay Area to submit stories for a contest," Trost says.*特罗斯特说：“我们想做一些事情，让湾区的艺术家们提交故事参加比赛。”*2024年新2卷
+"And as of right now, we've received about 120 submissions. The winning stories would go into our kiosk and then you would be a published artist."*“到目前为止，我们已经收到了大约120份投稿。获胜的故事将会进入我们的小亭子，然后你将成为一个发表作品的艺术家。”*2024年新2卷
+Ridership on transit systems across the country has been down the past half century, so could short stories save transit?*过去半个世纪以来，全国的交通系统乘客量一直在下降，那么短篇故事能拯救交通吗？*2024年新2卷
+Trost thinks so.*特罗斯特这样认为。*2024年新2卷
+"At the end of the day all transit agencies right now are doing everything they can to improve the rider experience. So I absolutely think we will get more riders just because of short stories," she says.*她说：“归根结底，现在所有的交通机构都在尽他们所能改善乘客体验。所以我真的认为，仅仅因为这些短篇故事，我们会吸引更多的乘客。”*2024年新2卷
+And you'll never be without something to read.*你将不再无书可读。*2024年新2卷
+24. Why did BART start the kiosk program?*24. BART为何启动报亭计划？*2024年新2卷
+A. To promote the local culture.*A. 为了推广当地文化。*2024年新2卷
+B. To discourage phone use.*B. 为了减少手机使用。*2024年新2卷
+C. To meet passengers’ needs.*C. 满足乘客需求。*2024年新2卷
+D. To reduce its running costs.*D. 减少运营成本。*2024年新2卷
+25. How are the stories categorized in the kiosk?*25. 报亭里的故事是如何分类的？*2024年新2卷
+26. What has Trost been doing recently?*26. Trost最近在忙什么？*2024年新2卷
+A. Organizing a story contest.*A. 组织故事比赛。*2024年新2卷
+B. Doing a survey of customers.*B. 进行顾客调查。*2024年新2卷
+C. Choosing a print publisher.*C. 选择印刷出版商。*2024年新2卷
+D. Conducting interviews with artists.*D. 与艺术家进行访谈。*2024年新2卷
+27. What is Trost’s opinion about BART’s future?*27. Trost对BART未来的看法是什么？*2024年新2卷
+A. It will close down.*A. 它将关闭。*2024年新2卷
+B. Its profits will decline.*B. 它的利润将下降。*2024年新2卷
+C. It will expand nationwide.*C. 它将扩展到全国。*2024年新2卷
+D. Its ridership will increase.*D. 它的乘客数量将增加。*2024年新2卷
+We all know fresh is best when it comes to food.*众所周知，在食物方面，新鲜是最好的。*2024年新2卷
+However, most produce at the store went through weeks of travel and covered hundreds of miles before reaching the table.*然而，商店里的大部分农产品在到达餐桌前都要经过数周的运输，行程数百英里。*2024年新2卷
+While farmer's markets are a solid choice to reduce the journey, Babylon Micro-Farm (BMF) shortens it even more.*尽管农民市场是减少运输距离的一个可靠选择，但巴比伦微农场（BMF）进一步缩短了这一距离。*2024年新2卷
+BMF is an indoor garden system.*BMF是一种室内花园系统。*2024年新2卷
+It can be set up for a family.*它可以为家庭设置。*2024年新2卷
+Additionally, it could serve a larger audience such as a hospital, restaurant or school.*此外，它还可以服务于更大的群体，如医院、餐馆或学校。*2024年新2卷
+The innovative design requires little effort to achieve a reliable weekly supply of fresh greens.*这一创新设计几乎不需要什么努力就能实现每周新鲜绿叶蔬菜的可靠供应。*2024年新2卷
+By connecting through the Cloud, BMF is remotely monitored.*通过云连接，BMF可以远程监控。*2024年新2卷
+Also, there is a convenient app that provides growing data in real time.*此外，还有一个方便的应用程序提供实时生长数据。*2024年新2卷
+Because the system is automated, it significantly reduces the amount of water needed to grow plants.*由于系统自动化，它显著减少了种植植物所需的水量。*2024年新2卷
+Rather than watering rows of soil, the system provides just the right amount to each plant.*系统不是一排排地浇水，而是为每棵植物提供恰到好处的水量。*2024年新2卷
+After harvest, users simply replace the plants with a new pre-seeded pod to get the next growth cycle started.*收获后，用户只需用新的预播种子荚替换植物，即可开始下一个生长周期。*2024年新2卷
+Moreover, having a system in the same building where it's eaten means zero emissions from transporting plants from soil to salad.*此外，在食物被食用的同一建筑内拥有这样的系统意味着从土壤到沙拉的植物运输零排放。*2024年新2卷
+In addition, there's no need for pesticides and other chemicals that pollute traditional farms and the surrounding environment.*此外，不需要传统农场和周围环境中使用的农药和其他化学物质。*2024年新2卷
+BMF employees live out sustainability in their everyday lives.*BMF的员工在他们的日常生活中实践可持续性。*2024年新2卷
+About half of them walk or bike to work.*他们大约有一半的人步行或骑自行车上班。*2024年新2卷
+Inside the office, they encourage recycling and waste reduction by limiting garbage cans and avoiding single-use plastic.*在办公室内，他们通过限制垃圾桶数量和避免使用一次性塑料来鼓励回收和减少废物。*2024年新2卷
+"We are passionate about reducing waste, carbon and chemicals in our environment," said a BMF employee.*“我们对减少我们环境中的浪费、碳排放和化学物质充满热情，”一位BMF员工说。*2024年新2卷
+28. What can be learned about BMF from paragraph 1?*28. 从第一段中可以了解到BMF的什么信息？*2024年新2卷
+A. It guarantees the variety of food.*A. 它保证了食物的多样性。*2024年新2卷
+B. It requires day-to-day care.*B. 它需要日常照料。*2024年新2卷
+C. It cuts the farm-to-table distance.*C. 它缩短了从农场到餐桌的距离。*2024年新2卷
+D. It relies on farmer’s markets.*D. 它依赖于农民市场。*2024年新2卷
+29. What information does the convenient app offer?*29. 这个方便的应用程序提供了什么信息？*2024年新2卷
+A. Real-time weather changes.*A. 实时天气变化。*2024年新2卷
+B. Current condition of the plants.*B. 植物的当前状况。*2024年新2卷
+C. Chemical pollutants in the soil.*C. 土壤中的化学污染物。*2024年新2卷
+D. Availability of pre-seeded pods.*D. 预播种子荚的可用性。*2024年新2卷
+30. What can be concluded about BMF employees?*30. 关于BMF员工可以得出什么结论？*2024年新2卷
+A. They have a great passion for sports.*A. 他们对运动充满热情。*2024年新2卷
+B. They are devoted to community service.*B. 他们致力于社区服务。*2024年新2卷
+C. They are fond of sharing daily experiences.*C. 他们喜欢分享日常经验。*2024年新2卷
+D. They have a strong environmental awareness.*D. 他们有强烈的环保意识。*2024年新2卷
+31. What does the text mainly talk about?*31. 文本主要谈论什么？*2024年新2卷
+Given the astonishing potential of AI to transform our lives, we all need to take action to deal with our AI-powered future, and this is where AI by Design: A Plan for Living with Artificial Intelligence comes in.*鉴于人工智能改变我们生活的惊人潜力，我们所有人都需要采取行动来应对我们的人工智能驱动的未来，这就是《AI设计：与人工智能共生的计划》一书的用武之地。*2024年新2卷
+This absorbing new book by Catriona Campbell is a practical roadmap addressing the challenges posed by the forthcoming AI revolution (变革).*卡特里奥娜·坎贝尔这本引人入胜的新书是一个实用的路线图，它解决了即将到来的人工智能革命所提出的挑战。*2024年新2卷
+In the wrong hands, such a book could prove as complicated to process as the computer code (代码) that powers AI but, thankfully, Campbell has more than two decades’ professional experience translating the heady into the understandable.*如果落入错误的手中，这样一本书可能会像驱动AI的计算机代码一样难以处理，但幸运的是，坎贝尔拥有超过二十年的专业经验，能够将深奥的内容转化为易于理解的内容。*2024年新2卷
+She writes from the practical angle of a business person rather than as an academic, making for a guide which is highly accessible and informative and which, by the close, will make you feel almost as smart as AI.*她从一个商业人士的实用角度进行写作，而不是作为一个学者，这使得这本书非常易于理解和信息丰富，而且到了最后，它会让你感觉几乎和AI一样聪明。*2024年新2卷
+As we soon come to learn from AI by Design, AI is already super-smart and will become more capable, moving from the current generation of “narrow-AI” to Artificial General Intelligence.*正如我们很快从《AI设计》中学到的，AI已经非常智能，并将变得更加强大，从当前的“窄AI”发展到通用人工智能。*2024年新2卷
+From there, Campbell says, will come Artificial Dominant Intelligence.*从那里开始，坎贝尔说，将会出现主宰性的人工智能。*2024年新2卷
+This is why Campbell has set out to raise awareness of AI and its future now — several decades before these developments are expected to take place.*这就是为什么坎贝尔现在就开始提高人们对AI及其未来的认知——在这些发展预期发生前几十年。*2024年新2卷
+She says it is essential that we keep control of artificial intelligence, or risk being sidelined and perhaps even worse.*她说，我们必须控制好人工智能，否则就有被边缘化甚至更糟的风险。*2024年新2卷
+Campbell’s point is to wake up those responsible for AI—the technology companies and world leaders—so they are on the same page as all the experts currently developing it.*坎贝尔的观点是唤醒那些对AI负有责任的人——技术公司和世界领导人——这样他们就能与目前正在开发AI的所有专家保持一致。*2024年新2卷
+She explains we are at a “tipping point” in history and must act now to prevent an extinction-level event for humanity.*她解释说，我们正处于历史上的“转折点”，必须立即采取行动，以防止对人类造成灭绝级别的事件。*2024年新2卷
+We need to consider how we want our future with AI to pan out.*我们需要考虑我们希望我们的AI未来如何展开。*2024年新2卷
+Such structured thinking, followed by global regulation, will enable us to achieve greatness rather than our downfall.*这样有结构的思考，再加上全球监管，将使我们能够实现伟大，而不是我们的灭亡。*2024年新2卷
+36 （B）. Certainly not. The loss of what travel offers would be unacceptable in today's world.*36. 当然不是。在今天的世界中，失去旅行所提供的东西是不可接受的。*2024年新2卷
+Here are some tips on making wise decisions to minimize pressure on the places we visit and improve our experience.*这里有一些建议，可以帮助我们做出明智的决策，以减少我们访问的地方的压力并改善我们的体验。*2024年新2卷
+● Choose mindfully. Overvisited destinations are that way for a reason: they're special.*● 谨慎选择。过度旅游的目的地之所以如此，是有原因的：它们很特别。*2024年新2卷
+With so many online posts featuring the same places, it's easy to feel like you're missing out.*由于如此多的在线帖子介绍相同的地方，很容易让人感觉错过了什么。*2024年新2卷
+Go somewhere only when the landscape, culture or food deeply draws you.*只有当风景、文化或食物深深吸引你时，才去某个地方。*2024年新2卷
+● Get creative. The best way to ease pressure on over-touristed destinations is to go somewhere else.*● 创新思维。缓解过度旅游目的地压力的最佳方式是去别的地方。*2024年新2卷
+Though overtourism is described as a problem affecting the entire world, it's actually concentrated to a small number of extremely popular spots.*尽管过度旅游被描述为影响整个世界的问题，但它实际上只集中在少数极受欢迎的地点。*2024年新2卷
+That means you have tons of less-visited options to choose from.*这意味着你有很多访问量较少的选择。*2024年新2卷
+38（E）**2024年新2卷
+Why not try a regional alternative or check out a popular destination’s lesser-known sights?*为什么不尝试一个地区性的选择或查看一个受欢迎目的地不太知名的风景？*2024年新2卷
+● Minimize impact and maximize experience by skipping major holidays or rush hour.*● 通过避开主要假期或高峰时间，最小化影响并最大化体验。*2024年新2卷
+You'll compete with fewer tourists, save money, experience a different side of a popular place, and boost the economy when tourism is traditionally slower.*你将与较少的游客竞争，节省金钱，在传统旅游业较慢时体验一个受欢迎的地方的不同一面，并促进经济。*2024年新2卷
+Visiting a place that others call home is a privilege (荣幸).*访问别人称之为家的地方是一种荣幸。*2024年新2卷
+40（G）. Do your part to preserve what makes a destination special in the first place.*40. 尽你的一份力量来保护最初使目的地特别的东西。*2024年新2卷
+You may be amazed how much closer you'll feel to the people there.*你可能会惊讶地发现你与那里的人们感觉有多亲近。*2024年新2卷
+A. Visit during off-peak times.*A. 在非高峰时段访问。*2024年新2卷
+B. So, should we stop traveling?*B. 那么，我们应该停止旅行吗？*2024年新2卷
+C. Travel for you and no one else.*C. 只为自己而旅行。*2024年新2卷
+D. Can overtourism be avoided then?*D. 那么，过度旅游可以避免吗？*2024年新2卷
+E. You can still find relatively undiscovered places.*E. 你仍然可以找到相对未被发现的地方。*2024年新2卷
+F. You'll find yourself virtually alone, or close to it.*F. 你会发现自己几乎独自一人，或者接近独自一人。*2024年新2卷
+G. Consider giving back to the communities you’re visiting.*G. 考虑回馈你正在访问的社区。*2024年新2卷
+When I decided to buy a house in Europe ten years ago, I didn't think too long. I liked traveling in France, but when it came to picking my favorite spot to settle, Italy was the clear winner.*当我十年前决定在欧洲买房时，我没有考虑太久。我喜欢在法国旅行，但当谈到选择我最喜欢的定居点时，意大利是明显的赢家。*2024年新2卷
+During my first visit to Italy, I struggled to ask for directions or order in a restaurant.*在我第一次访问意大利时，我努力去问路或在餐馆点餐。*2024年新2卷
+But every time I tried to string a sentence of Italian together, the locals smiled at me and praised my language skills.*但每次我尝试将意大利语句子拼凑起来时，当地人都会对我微笑并表扬我的语言技能。*2024年新2卷
+That encouragement helped me to get through the language barrier.*这种鼓励帮助我克服了语言障碍。*2024年新2卷
+After I made Italy my permanent home, I discovered how warm-hearted Italians are.*在我将意大利作为我的永久家园之后，我发现意大利人是多么的热心肠。*2024年新2卷
+Neighbors will bring me freshly made cheese and will come to my door to remind me to close the window in my car when rain is coming.*邻居们会带给我新鲜的自制奶酪，并且在下雨时来到我家门口提醒我关上车窗。*2024年新2卷
+It's these small acts of kindness that make a new country feel like home.*正是这些小小的善举使一个新国家感觉像家一样。*2024年新2卷
+As a foodie, the way to my heart is through my stomach, and nowhere fuels my appetite quite like Italy.*作为一个美食爱好者，通往我心的路是通过我的胃，没有任何地方能像意大利一样激发我的食欲。*2024年新2卷
+Each town has its own traditional dish, and every family keeps a recipe passed from one generation to another.*每个小镇都有自己的传统菜肴，每个家庭都保留着一代代传下来的食谱。*2024年新2卷
+Families gather for big meals on Sundays, birthdays, and whatever other excuses they can come up with.*家庭在周日、生日以及他们能想出的任何其他借口时聚集在一起享用大餐。*2024年新2卷
+These meals are always accompanied by laughter and joy.*这些餐点总是伴随着笑声和欢乐。*2024年新2卷
+Whatever disadvantages life in Italy might have, the problems are forgotten once you sit down to a big meal with friends and family.*无论意大利的生活可能有什么缺点，一旦你坐下来与朋友和家人共进大餐，这些问题就会被遗忘。*2024年新2卷
+Chinese cultural elements commemorating Tang Xianzu, who is known as "the Shakespeare of Asia," add an international character to Stratford-upon-Avon, William Shakespeare’s hometown.*纪念中国的文化元素唐显祖，他被誉为“亚洲的莎士比亚”，为斯特拉特福——威廉·莎士比亚的故乡增添了国际特色。*2024年新2卷
+Tang and Shakespeare were contemporaries and both died in 1616. Although they could never have met, there are common themes in their works, said Paul Edmondson, head of research for the Shakespeare Birthplace Trust.*唐和莎士比亚是同时代的人，他们都在1616年去世。尽管他们从未见过面，但他们的作品中有着共同的主题，莎士比亚出生地信托研究负责人保罗·埃德蒙森说。*2024年新2卷
+“Some of the things that Tang was writing about were also Shakespeare’s concerns. I happen to know that Tang’s play The Peony Pavilion (《牡丹亭》) is similar in some ways to Romeo and Juliet.”*“唐所写一些东西是也是莎士比亚所关注的。我碰巧知道，唐的戏剧《牡丹亭》在某些方面与《罗密欧与朱丽叶》相似。”*2024年新2卷
+A statue commemorating Shakespeare and Tang was put up at Shakespeare’s Birthplace Garden in 2017. Two years later, a six-meter-tall pavilion, inspired by The Peony Pavilion, was built at the Firs Garden, just ten minutes’ walk from Shakespeare’s birthplace.*2017年，在莎士比亚的出生地花园立了一座纪念莎士比亚和唐的雕像。两年后，在离莎士比亚出生地仅十分钟步行路程的Firs花园，建造了一个受《牡丹亭》启发的六米高的亭子，该亭子建立了。*2024年新2卷
+Those cultural elements have increased Stratford’s international visibility, said Edmondson, adding that visitors walking through the Birthplace Garden were often amazed to find the connection between the two great writers.*这些文化元素增加了斯特拉特福的国际知名度，埃德蒙森说，并补充说，穿过出生地花园的游客经常对发现这两位伟大作家之间的联系感到惊讶。*2024年新2卷
+Recalling watching a Chinese opera version of Shakespeare’s play Richard III in Shanghai and meeting Chinese actors who came to Stratford a few years ago to perform parts of The Peony Pavilion, Edmondson said, “It was very exciting to hear the Chinese language and see how Tang’s play was being performed.”*回想在上海观看莎士比亚戏剧《理查德三世》的中国戏曲版本，以及几年前来斯特拉特福表演《牡丹亭》部分内容的中国演员，埃德蒙森说：“听到中文语言和看到唐的戏剧是如何被表演的，非常令人兴奋。”*2024年新2卷
+I met Gunter on a cold, wet and unforgettable evening in September.*我在九月一个寒冷、潮湿且难忘的晚上遇见了冈特。*2024年新2卷
+I had planned to fly to Vienna and take a bus to Prague for a conference.*我原本计划飞往维也纳，然后乘公交车去布拉格参加会议。*2024年新2卷
+Due to a big storm, my flight had been delayed by an hour and a half.*由于一场大风暴，我的航班延误了一个半小时。*2024年新2卷
+I touched down in Vienna just 30 minutes before the departure of the last bus to Prague.*就在开往布拉格的最后一班公交车出发前30分钟，我抵达了维也纳。*2024年新2卷
+The moment I got off the plane, I ran like crazy through the airport building and jumped into the first taxi on the rank without a second thought.*我一下飞机，就不顾一切地跑过机场大楼，毫不犹豫地跳上了排队的第一辆出租车。*2024年新2卷
+That was when I met Gunter.*就在那时我遇到了冈特。*2024年新2卷
+I told him where I was going, but he said he hadn’t heard of the bus station.*我告诉他我要去哪里，但他说他没听说过那个公交站。*2024年新2卷
+I thought my pronunciation was the problem, so I explained again more slowly, but he still looked confused.*我以为是我的发音问题，所以我又更慢、更清晰地解释了一遍，但他看起来还是困惑。*2024年新2卷
+When I was about to give up, Gunter fished out his little phone and rang up a friend.*当我快要放弃的时候，冈特掏出了他的小手机，给一个朋友打了电话。*2024年新2卷
+After a heated discussion that lasted for what seemed like a century, Gunter put his phone down and started the car.*在一段似乎持续了一个世纪的激烈讨论之后，冈特放下电话，启动了汽车。*2024年新2卷
+Finally, with just two minutes to spare we rolled into the bus station.*最终，我们提前两分钟到达了公交站。*2024年新2卷
+Thankfully, there was a long queue still waiting to board the bus.*谢天谢地，还有一长队人在等待上车。*2024年新2卷
+Gunter parked the taxi behind the bus, turned around, and looked at me with a big smile on his face. "We made it," he said.*冈特把出租车停在了公交车后面，转过身来，脸上带着灿烂的笑容对我说：“我们做到了。”*2024年新2卷
+Just then I realized that I had zero cash in my wallet.*就在那时，我意识到我的钱包里一分钱现金都没有。*2024年新2卷
+I flashed him an apologetic smile as I pulled out my Portuguese bankcard.*我带着歉意的微笑拿出了我的葡萄牙银行卡。*2024年新2卷
+He tried it several times, but the card machine just did not play along.*他尝试了几次，但刷卡机就是不配合。*2024年新2卷
+A feeling of helplessness washed over me as I saw the bus queue thinning out.*当我看到公交车队逐渐缩短时，一种无助感涌上心头。*2024年新2卷
+At this moment, Gunter pointed towards the waiting hall of the bus station.*这时，冈特指向了公交站的候车大厅。*2024年新2卷
+There, at the entrance, was a cash machine.*那里，在入口处，有一台自动取款机。*2024年新2卷
+I jumped out of the car, made a mad run for the machine, and popped my card in, only to read the message: "Out of order. Sorry."*我跳出车外，疯狂地跑向机器，插入我的卡，却只看到了消息：“暂停服务。抱歉。”*2024年新2卷
+Look, we have time for a hamburger from a fast-food restaurant.*看，我们有时间在快餐店吃个汉堡。*2024年甲卷
+Forget that. I know a new restaurant on Maple Street, not far from our company. Is that okay with you?*算了吧。我知道在我们公司附近Maple街有一家新餐馆。你介意吗？*2024年甲卷
+Perfect.*太好了。*2024年甲卷
+Hi, Vicky. I remember our class presentation is on Wednesday, but you said it’s on Thursday. Are you sure?*嗨，Vicky。我记得我们的课堂展示是在星期三，但你说是在星期四。你确定吗？*2024年甲卷
+Oh, sorry. It was a slip of the tongue. I meant Tuesday for sure.*哦，对不起。口误了。我确定是星期二。*2024年甲卷
+Allen’s Furniture. Can I help you?*艾伦家具店。我能帮您吗？*2024年甲卷
+Hi. I’m the one who asked about the price of a glass tea table top just now. I’m sorry I made a mistake. The size should be 75 cm × 50 cm.*嗨。我就是刚才询问玻璃茶几价格的那个人。很抱歉我弄错了。尺寸应该是75厘米×50厘米。*2024年甲卷
+Oh, that’ll make a difference in the price. Hold on and let me find out.*哦，那会影响价格的。稍等，让我查一下。*2024年甲卷
+These are our new arrivals. Every man should own at least one woolen sweater, don’t you think?*这些是我们的新到货。每个男人至少应该拥有一件羊毛衫，你不这么认为吗？*2024年甲卷
+I agree. Any suggestions?*我同意。有什么建议吗？*2024年甲卷
+The one with two pockets sells best this year. Lightweight and stylish. Would you like to try it on?*带两个口袋的那款今年卖得最好。轻便又时尚。你想试试吗？*2024年甲卷
+How do you like your school, Tom?*你觉得你的学校怎么样，Tom？*2024年甲卷
+Oh, I like it a lot. And I also like the area. The nearby recreation center is cool. Thank you, mom.*哦，我非常喜欢。我也喜欢这个地区。附近有个娱乐中心很酷。谢谢妈妈。*2024年甲卷
+What a relief that you’re happy with your new home.*真松了一口气，你对新家很满意。*2024年甲卷
+I don’t know if I want to go to college. I don’t think I’ll do very well there.*我不知道我是否想去上大学。我觉得我在那里不会做得很好。*2024年甲卷
+Why not?*为什么不呢？*2024年甲卷
+Because I’m not smart.*因为我不聪明。*2024年甲卷
+Yeah. It can be scary.*是的。这可能很可怕。*2024年甲卷
+Did you ever come close to dropping out, dad?*你曾经差点退学吗，爸爸？*2024年甲卷
+No. But I worried a lot before I went, because I thought college would be full of brains. Once I got there, I found out that most of the kids were just like me.*没有。但我去之前很担心，因为我认为大学会充满了聪明人。一旦我到了那里，我发现大多数孩子都和我一样。*2024年甲卷
+Hello, listeners. People around the world are reporting that birds are much louder these days. Now I’ve connected with Dr. Zollinger, and let’s hear what she will say.*听众朋友们好。世界各地的人们都在报告说这些天鸟儿的叫声大多了。现在我已经联系了佐林格博士，让我们听听她会怎么说。*2024年甲卷
+Well, we feel that they’re singing louder, because they sing in typically noisy places. But when the noise is gone, they sing quieter than they normally do.*嗯，我们感觉它们叫得更大声，因为它们通常在嘈杂的地方唱歌。但是当噪音消失时，它们比平时叫得更安静。*2024年甲卷
+So, in other words, birds are like us. In a noisy bar, for example, people will raise their voices?*所以，换句话说，鸟儿就像我们一样。例如，在嘈杂的酒吧里，人们会提高声音？*2024年甲卷
+Exactly. We know that birds sing quieter on the weekend mornings. This is because the noise levels are lower than the weekday rush, and that’s probably what’s happening now. Here, I’ve recorded a call of the songbird. Listen to see if you can hear the difference.*没错。我们知道鸟儿在周末的早晨叫得更安静。这是因为噪音水平低于工作日的高峰，这可能就是现在正在发生的情况。这里，我录下了鸣禽的叫声。听听看你是否能听到不同。*2024年甲卷
+Hi. I don’t think we’ve met before. I’m Mike.*嗨。我想我们之前没见过。我是迈克。*2024年甲卷
+Hi, Mike. My name is Jena. Nice to meet you.*嗨，迈克。我叫珍娜。很高兴认识你。*2024年甲卷
+Nice to meet you, Jena. Where do you come from?*很高兴认识你，珍娜。你来自哪里？*2024年甲卷
+Well, originally I’m from Canada, but we moved to Australia when I was about 5 years old. Now my parents live in Tokyo. How about you, Mike?*嗯，我原本来自加拿大，但我们在我大约5岁的时候搬到了澳大利亚。现在我的父母住在东京。你呢，迈克？*2024年甲卷
+I was born in Glasgow, and we lived there until I was six. Then since my father worked for an international trade company, we moved all over the place.*我出生在格拉斯哥，我们一直住在那里直到我六岁。后来我父亲为一家国际贸易公司工作，我们就到处搬家。*2024年甲卷
+Oh, yeah. Where are some of the places you’ve lived?*哦，是吗。你住过的一些地方是哪里？*2024年甲卷
+Most of the time, we lived abroad. We spent a total of 10 years in Japan, Germany and Korea. We came back to the UK only 2 years ago, but I think my parents would prefer to stay overseas for another 20 years.*大部分时间我们都住在国外。我们在日本、德国和韩国总共待了10年。我们只在2年前回到英国，但我认为我的父母更愿意在国外再待20年。*2024年甲卷
+Wow, it sounds like you’ve had an interesting life.*哇，听起来你的生活很有趣。*2024年甲卷
+Good morning. Welcome the space hero, Mr. Green, to my studio.*早上好。欢迎太空英雄，格林先生，来到我的工作室。*2024年甲卷
+Hello, Maria. Hello, my dear friends.*你好，玛丽亚。我亲爱的朋友们，你们好。*2024年甲卷
+Well, let’s start from the first question I collected from the audience. Did you have any moments of dizziness since you landed back on the Earth?*好的，让我们从我收集到的第一个观众问题开始。自从你回到地球后，你有没有感到头晕的时候？*2024年甲卷
+The first 3 days back were pretty tough. Your body system is all messed up, so you feel dizzy. It’s quite normal, though.*回来的前3天相当艰难。你的身体系统全部乱套了，所以你会感到头晕。不过这很正常。*2024年甲卷
+Thanks. Another question. Would you go for the first manned Mars travel if you have the chance?*谢谢。另一个问题。如果有这个机会，你会参加第一次载人火星旅行吗？*2024年甲卷
+Absolutely. A trip to Mars is hugely exciting. I’m always ready for it.*绝对会。去火星旅行非常激动人心。我总是准备好了。*2024年甲卷
+I know you can watch movies on the space station. What’s your favorite space movie? Some people asked.*我知道你可以在空间站看电影。你最喜欢的太空电影是什么？有些人问。*2024年甲卷
+Apollo 13 is probably my top one. My sons love Blue Earth. It was brilliant watching the new movie on board the space station.*阿波罗13号可能是我最喜欢的。我的儿子们喜欢《蓝色地球》。在空间站上看这部新电影真是太棒了。*2024年甲卷
+Each ARTS FIRST festival is a unique annual celebration of the Harvard community’s artistic creativity.*每个ARTS FIRST节日都是对哈佛社群艺术创造力的一年一度的独特庆祝。*2024年甲卷
+We invite you to join us for the coming ARTS FIRST.*我们邀请您参加即将到来的ARTS FIRST。*2024年甲卷
+We look forward to welcoming you as we showcase the creativity of the Harvard arts community through performances, art exhibitions and art-making activities.*我们期待欢迎您来参加，届时我们将通过表演、艺术展览和艺术创作活动展示哈佛艺术社群的创造力。*2024年甲卷
+The festival is a public event for Harvard and community members of all ages.*这个节日是面向哈佛和社区所有年龄段成员的公共活动。*2024年甲卷
+Learn about the materials and qualities of watercolor paint with experts from the Harvard Art Museums Materials Lab.*与哈佛艺术博物馆材料实验室的专家一起了解水彩画的材料和特性。*2024年甲卷
+Try your hand at some of the painting tricks used by artists whose works will be in the upcoming exhibition of American Watercolors, 1880–1990: Into the Light.*尝试一下那些在即将到来的1880-1990年美国水彩画展：“进入光明”中展出的艺术家们使用的绘画技巧。*2024年甲卷
+From webs to cocoons, invertebrates create some of nature’s most delicate and beautiful designs.*从网到茧，无脊椎动物创造了自然界一些最精致和美丽的设计。*2024年甲卷
+Join Javier Marin from the Harvard Museum of Natural History to learn how insects and other invertebrates dance, inspire fashion and create art, while making your own spineless artists out of craft materials.*加入来自哈佛自然历史博物馆的哈维尔·马林，学习昆虫和其他无脊椎动物如何跳舞，激发时尚，创造艺术，同时用手工材料制作你自己的无脊椎艺术家。*2024年甲卷
+Join instructors from the Ceramics Program and great potters from Quincy, Cabot and Mather Houses for demonstrations using the potter’s wheel.*与陶瓷项目的教练以及来自昆西、卡伯特和马瑟住宅的优秀陶工一起，参加使用陶轮的演示。*2024年甲卷
+Then create your own masterpiece!*然后创造你自己的杰作！*2024年甲卷
+Join the Harvard Undergraduate Knitting Circle to make pom-poms and tassels out of thread, or pick up a pair of needles and learn to knit.*加入哈佛本科针织圈，用线做绒球和流苏，或者拿起一副针开始学习编织。*2024年甲卷
+Animals can express their needs using a lot of ways.*动物可以用许多方式表达它们的需求。*2024年甲卷
+For instance, almost all animals have distinct vocals that they rely on to either ask for help, scare away any dangerous animals or look for shelter.*例如，几乎所有动物都有它们依赖的独特的叫声，用来请求帮助、吓走危险动物或寻找庇护所。*2024年甲卷
+But cats are special creatures who possess amazing vocalization skills.*但猫是特殊的生物，它们拥有惊人的发声技巧。*2024年甲卷
+They are able to have entire conversations with humans using meows and you’re able to interpret it.*它们能够通过喵喵叫与人类进行完整的对话，而你也能够理解它们。*2024年甲卷
+If a pet cat is hungry, it will keep meowing to attract attention and find food.*如果一只宠物猫饿了，它会不停地喵喵叫以吸引注意力并寻找食物。*2024年甲卷
+However, when a cat is looking for affection, they tend to produce stretched and soft meows.*然而，当一只猫在寻求爱抚时，它们往往会发出拉长而柔和的喵喵声。*2024年甲卷
+Meowing starts as soon as a baby cat is brought to life and uses it to get the mother’s attention and be fed.*一只小猫一出生就开始喵喵叫，用这种方式来吸引母亲的注意并获得食物。*2024年甲卷
+Cats have many heightened senses, but their sense of smell is quite impressive.*猫有许多增强的感官，但它们的嗅觉相当令人印象深刻。*2024年甲卷
+They use their noses to assess their environment and look out for any signs of danger.*它们用鼻子评估周围环境并留意任何危险的迹象。*2024年甲卷
+They will sniff out specific areas before they choose a place to relax.*它们会在选择放松的地方之前嗅探特定区域。*2024年甲卷
+However, another way the cats are able to distinguish between situations is by looking for familiar smells.*然而，猫区分不同情况的另一种方式是通过寻找熟悉的气味。*2024年甲卷
+Your cat will likely smell your face and store the smell in its memory and use it to recognize you in the future.*你的猫可能会嗅你的脸，并将气味存储在它的记忆中，并用它在未来识别你。*2024年甲卷
+That’s why most pet cats are able to tell immediately if their owners were around any other cats, which they don’t usually like.*这就是为什么大多数宠物猫能够立即察觉到它们的主人是否在其他猫周围，而这通常是它们不喜欢的。*2024年甲卷
+Dogs are known for their impressive fetching habit, but cats take this behavior up a notch.*狗以其令人印象深刻的取物习惯而闻名，但猫将这种行为提升到了一个新的水平。*2024年甲卷
+Many cats will find random objects outside and bring them to their owners.*许多猫会在外面找到随机的物品并把它们带给它们的主人。*2024年甲卷
+This is a very old habit that’s been present in all kinds of predators.*这是一种在所有类型的食肉动物中都存在的非常古老的习惯。*2024年甲卷
+Cats bring gifts for their owners to show they love you.*猫为主人带来礼物来表达它们对你的爱。*2024年甲卷
+These adorable little hunters are just doing something that it’s been in their nature since the beginning of time.*这些可爱的小猎手只是在做它们自远古以来就具有的本能。*2024年甲卷
+So just go along with it!*所以，就随它们去吧！*2024年甲卷
+The Saint Lukas train doesn’t accept passengers — it accepts only the sick.*圣卢卡斯火车不接受乘客——它只接受病人。*2024年甲卷
+The Saint Lukas is one of five government-sponsored medical trains that travel to remote towns in central and eastern Russia.*圣卢卡斯是五列政府资助的医疗火车之一，它们前往俄罗斯中部和东部的偏远城镇。*2024年甲卷
+Each stop lasts an average of two days, and during that time the doctors and nurses on board provide rural populations with basic medical care, X-ray scans and prescriptions.*每站平均停留两天，在这段时间里，车上的医生和护士为农村居民提供基本的医疗护理、X光扫描和处方。*2024年甲卷
+People started queuing to make an appointment early in the morning, says Emile Ducke, a German photographer who traveled with the staff of the Saint Lukas for a two-week trip in November through the vast regions of Krasnoyarsk and Khakassia.*人们从一大早就开始排队预约，德国摄影师埃米尔·杜克说，他在11月与圣卢卡斯的工作人员一起穿越广阔的克拉斯诺亚尔斯克和哈卡斯地区进行了为期两周的旅行。*2024年甲卷
+Russia’s public health care service has been in serious need of modernization.*俄罗斯的公共医疗服务迫切需要现代化。*2024年甲卷
+The government has struggled to come up with measures to address the problem, particularly in the poorer, rural areas east of the Volga River, including arranging doctors’ appointments by video chat and expanding financial aid programs to motivate doctors to practice medicine in remote parts of the country like Krasnoyarsk.*政府一直在努力提出措施来解决这个问题，特别是在伏尔加河东部较贫穷的农村地区，包括通过视频聊天安排医生的预约，并扩大财政援助项目，以激励医生在像克拉斯诺亚尔斯克这样的国家偏远地区从事医疗工作。*2024年甲卷
+The annual arrival of the Saint Lukas is another attempt to improve the situation.*圣卢卡斯的年度到来是改善这种情况的又一次尝试。*2024年甲卷
+For 10 months every year, the train stops at about eight stations over two weeks, before returning to the regional capital to refuel and restock.*每年有10个月，这列火车在两周内停靠大约八个站点，然后返回地区首府加油和补给。*2024年甲卷
+Then it starts all over again the next month.*然后在下个月重新开始。*2024年甲卷
+Most stations wait about a year between visits.*大多数站点在访问之间要等待大约一年。*2024年甲卷
+Doctors see up to 150 patients every day.*医生每天看诊多达150名病人。*2024年甲卷
+The train’s equipment allows for basic checkups.*火车上的设备允许进行基本的体检。*2024年甲卷
+I was very impressed by the doctors and their assistants working and living in such little space but still staying focused and very concerned, says Ducke.*杜克说，我对医生和他们的助手在如此狭小的空间里工作和居住，但仍然保持专注和非常关心印象深刻。*2024年甲卷
+They were the best chance for many rural people to get the treatment they want.*他们是许多农村人获得他们想要的治疗的最好机会。*2024年甲卷
+“I didn’t like the ending,” I said to my favorite college professor.*“我不喜欢那个结局，”我对我的最喜欢的大学教授说。*2024年甲卷
+It was my junior year of undergraduate, and I was doing an independent study on Victorian literature.*那是我大学三年级的时候，我正在进行一项关于维多利亚时代文学的独立研究。*2024年甲卷
+I had just finished reading The Mill on the Floss by George Eliot, and I was heartbroken with the ending.*我刚读完乔治·艾略特的《弗洛斯河上的磨坊》，我对那个结局感到心碎。*2024年甲卷
+Prof. Gracie, with all his patience, asked me to think about it beyond whether I liked it or not.*格雷西教授耐心地让我超越自己是否喜欢它来思考这个问题。*2024年甲卷
+He suggested I think about the difference between endings that I wanted for the characters and endings that were right for the characters, endings that satisfied the story even if they didn’t have a traditionally positive outcome.*他建议我思考我希望给角色的结局和对角色合适的结局之间的区别，即使它们没有传统意义上的积极结果，也要满足故事的结局。*2024年甲卷
+Of course, I would have preferred a different ending for Tom and Maggie Tulliver, but the ending they got did make the most sense for them.*当然，我本可以为汤姆和麦琪·图利弗选择一个不同的结局，但他们得到的结局对他们来说确实是最合理的。*2024年甲卷
+This was an aha moment for me, and I never thought about endings the same way again.*这对我来说是一个顿悟的时刻，我再也没有以同样的方式考虑过结局。*2024年甲卷
+From then on, if I wanted to read an ending guaranteed to be happy, I’d pick up a love romance.*从那时起，如果我想读一个保证有快乐结局的书，我会选择一本爱情小说。*2024年甲卷
+If I wanted an ending I couldn’t guess, I’d pick up a mystery.*如果我想要一个我猜不到的结局，我会选择一本悬疑小说。*2024年甲卷
+One where I kind of knew what was going to happen, historical fiction.*如果我有点知道会发生什么，那就是历史小说。*2024年甲卷
+Choosing what to read became easier.*选择阅读什么变得更容易了。*2024年甲卷
+But writing the end — that’s hard.*但是写结局——那很难。*2024年甲卷
+It’s hard for writers because endings carry so much weight with readers.*对作家来说很难，因为结局对读者来说意义重大。*2024年甲卷
+You have to balance creating an ending that’s unpredictable, but doesn’t seem to come from nowhere, one that fits what’s right for the characters.*你必须平衡创造一个不可预测的结局，但又不显得无中生有，一个适合角色的结局。*2024年甲卷
+That’s why this issue of Writer’s Digest aims to help you figure out how to write the best ending for whatever kind of writing you’re doing.*这就是为什么《作家文摘》的这一期旨在帮助你弄清楚如何为你所做的任何类型的写作写出最好的结局。*2024年甲卷
+If it’s short stories, Peter Mountford breaks down six techniques you can try to see which one helps you stick the landing.*如果是短篇小说，彼得·蒙特福德分解了六种你可以尝试的技巧，看看哪一种能帮助你成功着陆。*2024年甲卷
+Elizabeth Sims analyzes the final chapters of five great novels to see what key points they include and how you can adapt them for your work.*伊丽莎白·西姆斯分析了五部伟大小说的最后几章，看看它们包含了哪些关键点，以及你如何将它们适应你的作品。*2024年甲卷
+This issue won’t tell you what your ending should be — that’s up to you and the story you’re telling — but it might provide what you need to get there.*这一期不会告诉你你的结局应该是什么——这取决于你和你正在讲述的故事——但它可能会提供你需要到达那里的东西。*2024年甲卷
+What is moderation?*什么是适度？*2024年甲卷
+Basically, it means eating only as much food as your body needs.*基本上，它的意思是只吃你的身体需要的食物量。*2024年甲卷
+You should feel satisfied at the end of a meal, but not too full.*你应该在餐后感到满足，但不要太饱。*2024年甲卷
+For many of us, moderation means eating less than we do now.*对我们许多人来说，适度意味着比我们现在吃得少。*2024年甲卷
+Take your time.*慢慢来。*2024年甲卷
+It’s important to slow down and think about food as something nutritious rather than just something to eat in between meetings.*重要的是放慢速度，将食物视为有营养的东西，而不仅仅是会议间隙吃的东西。*2024年甲卷
+Don’t swallow a meal on the way to work.*不要在上班路上匆忙吃完一餐。*2024年甲卷
+It actually takes a few minutes for your brain to tell your body that it has had enough food, so eat slowly and stop eating before you feel full.*你的大脑实际上需要几分钟的时间来告诉你的身体它已经吃饱了，所以吃得慢一些，在感觉饱之前停止进食。*2024年甲卷
+Eat with others whenever possible.*可能的话，和别人一起吃饭。*2024年甲卷
+Eating alone, especially in front of the TV or computer, often leads to mindless overeating.*独自吃饭，特别是在电视或电脑前，常常会导致无意识的暴饮暴食。*2024年甲卷
+Instead, surround yourself with healthy choices.*相反，让自己周围充满健康的选择。*2024年甲卷
+Be careful about the foods you keep at hand.*注意你手头准备的食物。*2024年甲卷
+It’s more challenging to eat in moderation if you have unhealthy snacks at the ready, like cookies.*如果你有随手可得的不健康零食，比如饼干，那么适度饮食就更具挑战性。*2024年甲卷
+Control emotional eating.*控制情绪化进食。*2024年甲卷
+We don’t always eat just to satisfy hunger.*我们吃东西并不总是为了满足饥饿。*2024年甲卷
+Many of us also turn to food to deal with unpleasant emotions such as sadness, loneliness, or boredom.*我们中的许多人也会转向食物来处理不愉快的情绪，如悲伤、孤独或无聊。*2024年甲卷
+But by learning healthier ways to manage emotions, you can regain control over the food you eat and your feelings.*但通过学习更健康的方式来管理情绪，你可以重新控制你吃的食物和你的感受。*2024年甲卷
+Eat properly throughout the day.*一整天都要吃得恰当。*2024年甲卷
+A healthy breakfast can start your metabolism, while eating small, healthy meals keeps your energy up all day.*健康的早餐可以启动你的新陈代谢，而吃小而健康的餐点可以整天保持你的能量。*2024年甲卷
+Avoid eating late at night.*避免深夜进食。*2024年甲卷
+Try to eat dinner earlier and fast for 14–16 hours until breakfast the next morning.*尝试早点吃晚餐，并禁食14-16小时直到第二天早晨吃早餐。*2024年甲卷
+Studies suggest that eating only when you’re most active and giving your digestive system a long break each day may help to regulate weight.*研究表明，只有在你最活跃的时候进食，并让你的消化系统每天长时间休息，可能有助于调节体重。*2024年甲卷
+One day, we had a family dinner. While the adults were busy with their serious talk outside, I was left alone in the kitchen to help my grandmother wash dishes.*有一天，我们举行了家庭晚餐。当大人们在外面忙着严肃的谈话时，我被单独留在厨房里帮我的祖母洗盘子。*2024年甲卷
+As always, my grandmother would tell me stories about her childhood.*像往常一样，我的祖母会给我讲述她童年的故事。*2024年甲卷
+Born just before WWII, my grandmother experienced an entirely different childhood lifestyle from mine.*我的祖母出生在二战前夕，她经历了与我完全不同的童年生活方式。*2024年甲卷
+She did not have a chance to go to school.*她没有机会去上学。*2024年甲卷
+Like in typical families, where boys were favored much more than girls, my grandma had to stay at home to do housework.*就像在典型的家庭中，男孩比女孩更受宠，我的祖母不得不留在家里做家务。*2024年甲卷
+The only opportunity she could seize to study was when her brother was having Chinese lessons with the family tutor.*她唯一能抓住学习的机会是她哥哥和家庭教师上中文课的时候。*2024年甲卷
+She would sit quietly at the far end of the long dinner table, listening closely.*她会安静地坐在长餐桌的远端，仔细地听。*2024年甲卷
+This training taught her to read and write her Chinese upside down — a skill that has turned out to be quite practical, especially whenever we share the newspaper.*这种训练教会了她倒着读写中文——这是一个非常实用的技能，尤其是每当我们看报纸的时候。*2024年甲卷
+On most weekends, my grandmother, a young girl then, and her brother would go to the beach.*大部分周末，我的祖母，那时还是个小女孩，和她哥哥会去海滩。*2024年甲卷
+There, they would walk through deep water, sit down cross-legged underwater and hold their breath while they watched all action going on around them.*在那里，他们会穿过深水，盘腿坐在水下，屏住呼吸，同时观察周围发生的一切。*2024年甲卷
+This is something I admire — her ability to open her eyes underwater and still sit comfortably on the seabed.*这是我钦佩的——她能在水下睁开眼睛，还能舒服地坐在海底。*2024年甲卷
+My childhood is quite happy compared with hers.*与她的童年相比，我的童年是相当幸福的。*2024年甲卷
+I am grateful that I did not need to go through the hardships like she did.*我很感激我不需要像她那样经历艰难。*2024年甲卷
+I’ve never faced the problem of education.*我从未面临过教育问题。*2024年甲卷
+I guess our different childhood background is what makes my grandmother such an amazing person to talk to: her stories always make my history textbooks come alive.*我猜我们不同的童年背景使我的祖母成为一个令人惊奇的谈话对象：她的故事总是让我的历史课本变得栩栩如生。*2024年甲卷
+Although parks of all sizes and types exist at any level, the national parks, in particular, tend to catch our attention because of their large size and variety.*尽管各种规模和类型的公园在各个层面上都存在，特别是国家公园因其庞大的规模和多样性，特别能够吸引我们的注意。*2024年甲卷
+They are treasures of American heritage (遗产).*它们是美国遗产的财富。*2024年甲卷
+On a cool, starry night in mid-September 1870, four men relaxed before a campfire along the Firehole River in what is now northwestern Wyoming.*在1870年9月中旬一个凉爽的、星光璀璨的夜晚，四个人沿着火洞河放松身心，那里现在是怀俄明州的西北部。*2024年甲卷
+They were part of a 15-member exploring party that had spent almost five awesome weeks in witness of the natural beauties there.*他们是一支15人的探险队的一部分，该队在那里花了将近五个令人敬畏的星期来见证自然之美。*2024年甲卷
+What should be done with such a beautiful place?*这么美丽的地方应该怎么处理？*2024年甲卷
+This area, with its unique and breathtaking natural beauty, must be well preserved for all people of the nation to enjoy — as a national park.*这个地区，凭借其独特且令人屏息的自然之美，必须得到良好保护供全国人民享受——作为一个国家公园。*2024年甲卷
+They all agreed and vowed (承诺) to promote the idea at the completion of their journey.*他们都同意了，并发誓在他们旅程的完成时推广这个想法。*2024年甲卷
+Their promotional work paid off. Two years later, 18 years before Wyoming became a state, Yellowstone became the first national park in the United States and the world.*他们的推广工作得到了回报。两年后，也就是怀俄明成为州之前的18年，黄石成为了美国和世界上的第一个国家公园。*2024年甲卷
+Yellowstone was the largest United States national park — 2.2 million acres — until Wrangell-Saint Elias in southern Alaska, which became a national monument in 1978, took the honors as a national park in 1980 with 12.3 million acres.*黄石曾是最大的美国国家公园——面积220万英亩——直到位于阿拉斯加南部的兰格尔-圣伊莱亚斯在1978年成为国家纪念碑，然后在1980年以1230万英亩的面积成为国家公园。*2024年甲卷
+Development of Transport in China*中国交通工具的发展*2024年甲卷
+From the vehicle of horses to today’s convenient transport, Chinese transport has an enormous development.*从马车到今天便捷的交通工具，中国的交通发展巨大。*2024年甲卷
+The popularity of shared bicycles offers green and affordable short-distance travel solutions.*共享单车的普及提供了绿色且经济实惠的短途出行方案。*2024年甲卷
+In addition, the introduction of high-speed trains has drastically shortened travel times, making intercity travel faster and more comfortable.*此外，高铁的引入大幅缩短了旅行时间，使城际旅行更快更舒适。*2024年甲卷
+Meanwhile, the emergence of new energy vehicles advocates for a low-carbon lifestyle and reflects China’s commitment to sustainable development.*与此同时，新能源汽车的出现倡导了低碳生活方式，并反映了中国对可持续发展的承诺。*2024年甲卷
+These advancements not only enhance mobility but also decrease pollution.*这些进步不仅增强了流动性，还减少了污染。*2024年甲卷
+As we look to the future, these transformative modes of transport will continue to shape the landscape of Chinese infrastructure and improve the quality of life for its people.*展望未来，这些变革性的交通方式将继续塑造中国的基础设施格局，并提高人民的生活质量。*2024年甲卷
+I’d just arrived at school, ready for another school day. I was reading a book in the classroom when there was an announcement.*我刚到学校，准备开始新的一天。我正在教室里看书，突然有一个通知。*2024年北京卷
+“Today at 1: 10 there will be auditions (面试) for a musical.” My friends all jumped up in excitement and asked me, “Will you be going, Amy?” “Sure,” I said.*“今天下午1点10分将会有音乐剧的面试。”我的朋友们都兴奋地跳起来，问我：“艾米，你会去吗？”“当然，”我说。*2024年北京卷
+I had no interest in drama, but I’d try out because my friends were doing it.*我对戏剧没有兴趣，但因为我的朋友们要去试镜，我也会去试试。*2024年北京卷
+At 1:10, there was a line outside the drama room. Everyone looked energetic.*1点10分，戏剧室外面排起了长队。每个人看起来都很兴奋。*2024年北京卷
+I hadn’t expected I’d be standing there that morning. But now that I was doing it, I suddenly felt nervous.*我没想到那天早上我会站在那里。但既然我已经来了，我突然感到紧张。*2024年北京卷
+I entered the room and the teachers made me say some lines from the musical. They then tested my singing skills and asked what role I wanted to play.*我走进房间，老师让我说了几句音乐剧的台词。然后他们测试了我的歌唱技巧，问我想要扮演什么角色。*2024年北京卷
+The teachers were smiling and praising me. I felt like I had a chance, so I said, “A big role.” They said they’d look into it.*老师们微笑着表扬我。我觉得我有一个机会，所以我说道：“一个大角色。”他们说会考虑的。*2024年北京卷
+I started getting really nervous. What if I didn’t get a main role?*我开始变得非常紧张。如果我得不到主角怎么办？*2024年北京卷
+Soon, the cast list was posted. My friends checked and came back shouting, “Amy, you got the main role! ”*不久，演员名单被贴出来了。我的朋友们检查后回来喊道：“艾米，你得到了主角！”*2024年北京卷
+Sure enough, my name was at the top. I just stared at it and started to well up.*果然，我的名字在最上面。我盯着它，眼泪开始涌出。*2024年北京卷
+I was so happy.*我太高兴了。*2024年北京卷
+After two months we were all prepared and ready to go on stage. It was fun.*两个月后，我们都准备好了，可以上台了。这很有趣。*2024年北京卷
+And when people started clapping, that gave me a boost of confidence.*当人们开始鼓掌时，这给了我信心。*2024年北京卷
+It stayed with me and made me feel braver.*它一直伴随着我，让我感到更勇敢。*2024年北京卷
+I realised that by trying something new, I can have fun — even if it means stepping out of my comfort zone.*我意识到，尝试新事物可以带来乐趣，即使这意味着走出我的舒适区。*2024年北京卷
+Slowing down can contribute significantly to personal growth.*放慢脚步可以显著促进个人成长。*2024年北京卷
+Taking the time to rest allows us to develop a deeper sense of self-awareness.*花时间休息让我们能培养更深层次的自我意识。*2024年北京卷
+When we slow down, we create space to reflect on our thoughts and emotions, which helps us identify important areas of our lives and gives us the opportunity to make right choices.*当我们放慢脚步时，我们创造了反思自己思想和情感的空间，这有助于我们识别生活中的重要领域，并让我们有机会做出正确的选择。*2024年北京卷
+To practise this, we need to establish clear boundaries in our personal and professional life.*要实践这一点，我们需要在个人和职业生活中建立明确的界限。*2024年北京卷
+Slowing down can contribute significantly to personal growth.*放慢脚步可以显著促进个人成长。*2024年北京卷
+Taking the time to rest allows us to develop a deeper sense of self-awareness.*花时间休息让我们能培养更深层次的自我意识。*2024年北京卷
+When we slow down, we create space to reflect on our thoughts and emotions, which helps us identify important areas of our lives and gives us the opportunity to make right choices.*当我们放慢脚步时，我们创造了反思自己思想和情感的空间，这有助于我们识别生活中的重要领域，并让我们有机会做出正确的选择。*2024年北京卷
+To practise this, we need to establish clear boundaries in our personal and professional life.*要实践这一点，我们需要在个人和职业生活中建立明确的界限。*2024年北京卷
+On April 5, 2024, John Tinniswood was named the world’s oldest living man.*2024年4月5日，约翰·廷尼斯伍德被评为世界上最长寿的在世男子。*2024年北京卷
+And when asked about his new title, he shared the secret: moderation (适度).*当被问及这一新头衔时，他分享了秘诀：适度。*2024年北京卷
+Tinniswood, who doesn’t smoke and rarely drinks, credited moderation for helping him stay healthy during his long life.*廷尼斯伍德不吸烟，极少饮酒，他将长寿归功于适度。*2024年北京卷
+“If you eat too much or do too much of anything, you’re going to suffer eventually,” he said.*“如果你吃得太多或做得太过，最终会遭受痛苦，”他说。*2024年北京卷
+One day, I saw a boy walking along George Street with an armful of books.*有一天，我看到一个男孩抱着一大堆书走在乔治街上。*2024年北京卷
+I thought to myself, “Why would he carry all his books?”*我心想，“他为什么要带着所有的书呢？”*2024年北京卷
+Just then, some kids ran at him, knocking his books out of his arms.*就在那时，一些孩子跑向他，把他的书撞掉了。*2024年北京卷
+His glasses went flying and landed in the grass.*他的眼镜飞了出去，掉在草地上。*2024年北京卷
+My heart went out to him, and I jogged over to him.*我对他产生了同情，慢跑过去。*2024年北京卷
+As I handed him the glasses, he looked at me and said, “Thanks!”*当我把眼镜递给他时，他看着我说：“谢谢！”*2024年北京卷
+The Language Exchange Programme allows students in pairs to communicate in two different languages they wish to share and learn each week.*语言交换项目允许学生以配对的方式每周用他们希望分享和学习的两种不同语言进行交流。*2024年北京卷
+Students record short entries after each partner meeting noting the language skills practised and the topics discussed.*每次伙伴会议后，学生会记录简短的条目，注明所练习的语言技能和讨论的主题。*2024年北京卷
+Each pair of students meets three times throughout the term with a teacher who decides if the exchange is effective.*每对学生在整个学期内与教师会面三次，由教师决定交流是否有效。*2024年北京卷
+Students who successfully complete the programme will receive one credit each.*成功完成该项目的学生将获得一个学分。*2024年北京卷
+Requirements for completion:*完成要求：*2024年北京卷
+One welcoming session on the second Friday of the term*学期第二个星期五的一次欢迎会议*2024年北京卷
+18 weekly one-hour pair meetings*18次每周一小时的配对会议*2024年北京卷
+Weekly progress reports for all pair meetings*所有配对会议的每周进展报告*2024年北京卷
+At least three pair-teacher meetings*至少三次配对教师会议*2024年北京卷
+One five-minute final video*一个五分钟的最终视频*2024年北京卷
+Sign up!*报名！*2024年北京卷
+The sign-up and registration process is as follows:*报名和注册过程如下：*2024年北京卷
+Students sign up and indicate the languages they can share and languages they are interested in learning.*学生报名并注明他们可以分享的语言和他们感兴趣学习的语言。*2024年北京卷
+Based on the information entered by each student, potential pairs are identified.*根据每个学生输入的信息，确定潜在的配对。*2024年北京卷
+Proficiency (熟练) levels are confirmed through coursework or placement tests.*熟练程度通过课程作业或分级测试来确认。*2024年北京卷
+Once a pair has been determined to be suitable, the students will be contacted individually with a special permission number to register for the programme.*一旦确定合适的配对，将分别联系学生，并给予特别许可号码以注册该项目。*2024年北京卷
+Reminders:*提醒：*2024年北京卷
+Signing up for the programme does not automatically mean that you will be able to register and participate.*报名参加该项目并不意味着你一定能够注册和参与。*2024年北京卷
+Pairs are matched by languages of interest and proficiency levels.*配对是根据语言兴趣和熟练程度来匹配的。*2024年北京卷
+Since there are many factors involved in the pairing process, not all students who sign up will be matched with a partner and be able to register for the programme.*由于配对过程涉及很多因素，并不是所有报名的学生都能匹配到一个伙伴并注册该项目。*2024年北京卷
+In the programme, students will practise their language skills.*在该项目中，学生将练习他们的语言技能。*2024年北京卷
+To complete the programme, students are required to participate in pair meetings.*为了完成该项目，学生需要参加配对会议。*2024年北京卷
+What do students need to do during the registration? Indicate their languages of interest.*学生在注册期间需要做什么？注明他们感兴趣的语言。*2024年北京卷
+When I was a little girl, I liked drawing, freely and joyously making marks on the walls at home.*当我还是个小女孩时，我喜欢画画，自由快乐地在家里的墙上留下痕迹。*2024年北京卷
+In primary school, I learned to write using chalks. Writing seemed to be another form of drawing.*在小学时，我学会了用粉笔写字。写字似乎是另一种形式的绘画。*2024年北京卷
+I shaped individual letters into repeating lines, which were abstract forms, delightful but meaningless patterns.*我把单个字母排列成重复的线条，这些是抽象的形式，令人愉悦但无意义的图案。*2024年北京卷
+In secondary school, art was my favourite subject. Since I loved it so much I thought I was good at it.*在中学，艺术是我最喜欢的科目。因为我非常喜欢它，所以我认为我擅长它。*2024年北京卷
+For the art O-level exam I had to present an oil painting. I found it difficult, but still hoped to pass.*为了艺术O级考试，我必须呈现一幅油画。我觉得很难，但仍希望能通过。*2024年北京卷
+I failed, with a low grade. I’d been over-confident. Now I’d been declared talentless.*我失败了，成绩很低。我过于自信。现在我被宣告没有天赋。*2024年北京卷
+But other channels of creativity stayed open: I went on writing poems and stories.*但其他创造力的渠道仍然开放：我继续写诗和故事。*2024年北京卷
+Still, I went to exhibitions often. I continued my habitual drawing, which I now characterised as childish doodling (乱画).*我仍然经常去参观展览。我继续我习惯性的画画，现在将其归类为孩子气的乱画。*2024年北京卷
+In my 30s, I made painter friends and learned new ways of looking at art. However, I couldn’t let myself have a go at actually doing it.*在我30多岁时，我交了一些画家朋友，学会了看待艺术的新方式。然而，我不能让自己真正去尝试。*2024年北京卷
+Though these new friends were abstract painters using oil paints, or were printmakers or sculptors, I took oil painting as the taboo (禁忌) high form I wasn’t allowed to practice.*虽然这些新朋友是使用油画的抽象画家，或是版画家或雕塑家，但我认为油画是一种禁忌的高尚形式，我不能练习。*2024年北京卷
+One night, in my early 40s, I dreamed that a big woman in red approached me, handed me a bag of paints, and told me to start painting.*在我40多岁时的一天晚上，我梦见一个穿红衣的大女人走近我，递给我一袋颜料，告诉我开始画画。*2024年北京卷
+The dream felt so authoritative that it shook me. It was a form of energy, giving me back something I’d lost.*这个梦感觉如此权威，以至于震撼了我。这是一种能量，给了我一些我失去的东西。*2024年北京卷
+Accordingly, I started by experimenting with water colours. Finally, I bought some oil paints.*因此，我开始尝试水彩画。最后，我买了一些油画颜料。*2024年北京卷
+Although I have enjoyed breaking my decades-long taboo about working with oil paints, I have discovered I now prefer chalks and ink.*尽管我享受打破我几十年来对油画颜料的禁忌，但我发现我现在更喜欢粉笔和墨水。*2024年北京卷
+I let my line drawings turn into cartoons I send to friends. It all feels free and easy. Un-anxious.*我让我的线条画变成发送给朋友的卡通画。这一切感觉自由轻松。无忧无虑。*2024年北京卷
+This time around, I can accept my limitations but keep going.*这次，我可以接受自己的局限性，但继续前进。*2024年北京卷
+Becoming a successful painter calls for being resolute.*成为一名成功的画家需要坚定不移。*2024年北京卷
+I realised I was always afraid of wanting too much.*我意识到我总是害怕想要太多。*2024年北京卷
+That dream reminded me that those fears and desires could encourage me to take risks and make experiments.*那个梦提醒我，那些恐惧和欲望可以鼓励我冒险和做实验。*2024年北京卷
+How did the author feel about the result of the art exam? Discouraged.*作者对艺术考试的结果感到如何？ 沮丧。*2024年北京卷
+In her 30s, the author avoided oil painting practice.*在她30多岁时，作者避免油画练习。*2024年北京卷
+Which word would best describe the author’s dream? Empowering.*哪个词最能描述作者的梦？ 赋权。*2024年北京卷
+What can we learn from this passage? Creative activities involve being confident.*我们能从这篇文章中学到什么？ 创造性活动需要自信。*2024年北京卷
+The notion that we live in someone else's video game is irresistible to many.*我们生活在别人视频游戏中的观念对许多人来说是不可抗拒的。*2024年北京卷
+Searching the term "simulation hypothesis" returns numerous results that debate whether the universe is a computer simulation.*搜索“模拟假说”一词会得到许多讨论宇宙是否是计算机模拟的结果。*2024年北京卷
+A concept that some scientists actually take seriously.*一些科学家实际上认真对待的一个概念。*2024年北京卷
+Unfortunately, this is not a scientific question.*不幸的是，这不是一个科学问题。*2024年北京卷
+We will probably never know whether it's true.*我们可能永远不会知道这是否是真的。*2024年北京卷
+We can, instead, use this idea to advance scientific knowledge.*相反，我们可以利用这个想法来推进科学知识。*2024年北京卷
+The 18th-century philosopher Kant argued that the universe ultimately consists of things-in-themselves that are unknowable.*18世纪哲学家康德认为，宇宙最终由本质上不可知的事物组成。*2024年北京卷
+While he held the notion that objective reality exists, he said our mind plays a necessary role in structuring and shaping our perceptions.*尽管他认为客观现实存在，但他说我们的心智在构建和塑造我们的感知中发挥着必要的作用。*2024年北京卷
+Modern sciences have revealed that our perceptual experience of the world is the result of many stages of processing by sensory systems and cognitive functions in the brain.*现代科学揭示了我们对世界的感知体验是大脑中感觉系统和认知功能多阶段处理的结果。*2024年北京卷
+No one knows exactly what happens within this black box.*没有人确切知道这个黑匣子里面发生了什么。*2024年北京卷
+If empirical experience fails to reveal reality, reasoning won't reveal reality either since it relies on concepts and words that are contingent on our social, cultural and psychological histories.*如果经验不能揭示现实，推理同样不能，因为它依赖于我们社会、文化和心理历史上偶然的概念和词汇。*2024年北京卷
+Again, a black box.*再次，一个黑匣子。*2024年北京卷
+So, if we accept that the universe is unknowable, we also accept we will never know if we live in a computer simulation.*所以，如果我们接受宇宙是不可知的，我们也接受我们永远不会知道我们是否生活在计算机模拟中。*2024年北京卷
+And then, we can shift our inquiry from "Is the universe a computer simulation?" to "Can we model the universe as a computer simulation?"*然后，我们可以将我们的探究从“宇宙是计算机模拟吗？”转变为“我们能将宇宙模拟为计算机模拟吗？”*2024年北京卷
+Modelling reality is what we do.*模拟现实是我们所做的。*2024年北京卷
+To facilitate our comprehension of the world, we build models based on conceptual metaphors that are familiar to us.*为了促进我们对世界的理解，我们构建基于我们熟悉的概念隐喻的模型。*2024年北京卷
+In Newton's era, we imagined the universe as a clock.*在牛顿时代，我们把宇宙想象成一个时钟。*2024年北京卷
+In Einstein's, we uncovered the standard model of particle physics.*在爱因斯坦时代，我们揭示了粒子物理学的标准模型。*2024年北京卷
+Now that we are in the information age, we have new concepts such as the computer, information processing, virtual reality, and simulation.*现在我们在信息时代，我们有新的概念，如计算机、信息处理、虚拟现实和模拟。*2024年北京卷
+Unsurprisingly, these new concepts inspire us to build new models of the universe.*这些新概念不出所料地激励我们构建宇宙的新模型。*2024年北京卷
+Models are not the reality, however.*然而，模型并不是现实。*2024年北京卷
+There is no point in arguing if the universe is a clock, a set of particles or an output of computation.*争论宇宙是一个时钟、一组粒子还是计算的输出是没有意义的。*2024年北京卷
+All these models are tools to deal with the unknown and to make discoveries.*所有这些模型都是处理未知事物和进行发现的工具。*2024年北京卷
+And the more tools we have, the more effective and insightful we can become.*我们拥有的工具越多，我们就能变得更有效、更有洞察力。*2024年北京卷
+It can be imagined that comparable to the process of building previous scientific models, developing the "computer simulation" metaphor-based model will also be a hugely rewarding exercise.*可以想象，与构建以前的科学模型的过程相似，开发基于“计算机模拟”隐喻的模型也将是一项极具回报的练习。*2024年北京卷
+Franz Boas's description of Inuit life in the 19th century illustrates the probable moral code of early humans.*弗朗兹·博阿斯对19世纪因纽特人的描述阐释了早期人类的可能的道德准则。*2024年北京卷
+Here, norms were unwritten and rarely expressed clearly, but were well understood and taken to heart.*在这里，规范是不成文的，很少被清晰表达，但却被深刻理解并铭记于心。*2024年北京卷
+Dishonest and violent behaviours were disapproved of; leadership, marriage and interactions with other groups were loosely governed by traditions.*不诚实和暴力行为被反对；领导、婚姻以及其他群体间的互动被松散地以传统为指导。*2024年北京卷
+Conflict was often resolved in musical battles.*冲突通常通过音乐战斗来解决。*2024年北京卷
+Because arguing angrily leads to chaos, it was strongly discouraged.*因为愤怒的争论会导致混乱，所以被强烈反对。*2024年北京卷
+With life in the unforgiving Northern Cariada being so demanding, the Inuit's practical approach to morality made good sense.*由于在无情的北方生活如此苛刻，因纽特人对道德的实用主义方法很有意义。*2024年北京卷
+The similarity of moral virtues across cultures is striking, even though the relative ranking of the virtues may vary with a social group's history and environment.*不同文化中道德美德的相似性是惊人的，尽管美德的相对排名可能因社会群体的历史和环境而有所不同。*2024年北京卷
+Typically, cruelty and cheating are discouraged, while cooperation, humbleness and courage are praised.*通常，残忍和欺骗被阻止，而合作、谦逊和勇气受到赞扬。*2024年北京卷
+These universal norms far pre-date the concept of any moralising religion or written law.*这些普遍规范远远早于任何宗教道德化或成文法律的概念。*2024年北京卷
+Instead, they are rooted in the similarity of basic human needs and our shared mechanisms for learning and problem solving.*相反，它们根植于基本人类需求的相似性以及我们共有的学习和解决问题的机制。*2024年北京卷
+Our social instincts include the intense desire to belong.*我们的社会本能包括强烈的归属欲望。*2024年北京卷
+The approval of others is rewarding, while their disapproval is strongly disliked.*他人的认同是有益的，而他们的不认同则被强烈厌恶。*2024年北京卷
+These social emotions prepare our brains to shape our behaviour according to the norms and values of our family and our community.*这些社会情感使我们的大脑准备好根据我们家庭和社区的规范和价值观来塑造我们的行为。*2024年北京卷
+More generally, social instincts motivate us to learn how to behave in a socially complex world.*更普遍地说，社会本能激励我们学习如何在复杂的社会环境中表现。*2024年北京卷
+The mechanism involves a repurposed reward system originally used to develop habits important for self-care.*这个机制涉及一个重新利用的奖励系统，最初用于培养对自我照顾重要的习惯。*2024年北京卷
+Our brains use the system to acquire behavioural patterns regarding safe routes home, efficient food gathering and dangers to avoid.*我们的大脑利用这个系统来获取有关安全回家路线、高效食物收集和避免危险的的行为模式。*2024年北京卷
+Good habits save time, energy and sometimes your life.*好习惯节省时间、精力，有时甚至救了你的命。*2024年北京卷
+Good social habits do something similar in a social context.*在社会环境中，好的社会习惯有类似的效用。*2024年北京卷
+We learn to tell the truth, even when lying is self-serving; we help a grandparent even when it is inconvenient.*我们学会讲真话，即使撒谎可能对自己有利；即使不方便，我们也帮助祖父母。*2024年北京卷
+We acquire what we call a sense of right and wrong.*我们获得了所谓的是非观念。*2024年北京卷
+Social benefits are accompanied by social demands: we must get along, but not put up with too much.*社会福利伴随着社会要求：我们必须相处，但不能忍受太多。*2024年北京卷
+Hence self-discipline is advantageous.*因此，自律是有利的。*2024年北京卷
+In humans, a greatly enlarged brain boosts self-control, just as it boosts problem-solving skills in the social as well as the physical world.*在人类中，一个大大扩大的大脑增强了自我控制，正如它增强了社会和物理世界中的问题解决技能一样。*2024年北京卷
+These abilities are strengthened by our capacity for language, which allows social practices to develop in extremely unobvious ways.*这些能力通过我们的语言能力得到加强，这使得社会实践能够以极其不明显的方式发展。*2024年北京卷
+What can be inferred about the forming of the Inuit's moral code?*关于因纽特人道德准则的形成，我们可以推断什么？*2024年北京卷
+Which would be the best title for this passage?*哪一项最适合作为这篇文章的标题？*2024年北京卷
+If you want to develop maximum credibility, is it better to be a hedgehog or a fox?*如果你想发展最大的可信度，是做一只刺猬更好还是做一只狐狸更好？*2024年北京卷
+According to Isaiah Berlin, the hedgehog knows one thing very well, and the fox knows a lot of things.*根据以赛亚·柏林的说法，刺猬对一件事了如指掌，而狐狸知道很多事情。*2024年北京卷
+Is there a clear advantage of one style over the other?*一种风格是否明显优于另一种风格？*2024年北京卷
+Hedgehog thinkers tend to answer yes.*刺猬型思考者倾向于回答“是”。*2024年北京卷
+And they are usually very credible in doing so.*他们通常在这样做时非常有可信度。*2024年北京卷
+According to Jim Hart, the “hedgehog concept” is one of the factors that lead companies to greatness.*根据吉姆·哈特的说法，“刺猬概念”是使公司变得伟大的因素之一。*2024年北京卷
+They focus on one thing and do it really well.*他们专注于一件事，并将其做到极致。*2024年北京卷
+They figure out what they are good at.*他们弄清楚了自己擅长什么。*2024年北京卷
+But there can be a downside to concentration on one big thing.*但是过分集中于一件大事可能有不利的一面。*2024年北京卷
+Philip Tate has studied the track records of those folks on the Sunday talk shows who make predictions about what will happen.*菲利普·泰特研究了在周日脱口秀上那些对将要发生的事情做出预测的人的记录。*2024年北京卷
+He has found that hedgehogs are not only wrong more often than foxes, but that they are less likely to recognise or admit that they are wrong when events do not match their predictions.*他发现刺猬不仅比狐狸更容易犯错，而且当事件与他们的预测不符时，他们不太可能认识到或承认自己的错误。*2024年北京卷
+The advantage that foxes have is that they are more likely to seek out new information from a broader range of sources, and are comfortable with uncertainty and new information.*狐狸的优势在于它们更有可能从更广泛的来源寻找新信息，并且对不确定性和新信息感到自在。*2024年北京卷
+They try to include it in their viewpoint rather than to exclude it from their thinking.*他们尝试将其纳入自己的观点，而不是将其排除在自己的思考之外。*2024年北京卷
+They also have a clearer estimation of what they know and don't know.*他们对自己知道和不知道的事情也有更清晰的估计。*2024年北京卷
+So, which is better? The question can be answered in a foxy hedgehog style.*那么，哪个更好？这个问题可以用狐狸般的刺猬风格来回答。*2024年北京卷
+The choice between being a hedgehog or a fox is a false trade-off.*选择做刺猬还是狐狸是一种错误的权衡。*2024年北京卷
+The most effective way to go through life is to try to be that rare mixture known as foxy hedgehog.*度过生活最有效的方式是尝试成为那种稀有的混合体，被称为狐狸般的刺猬。*2024年北京卷
+Growing up, I idealised independence. I always wanted my own efforts to be enough.*我从小就理想化了独立。我总是希望自己的努力就足够了。*2024年北京卷
+When I decided to pursue a postgraduate degree, I wanted to develop a novel research programme and quickly establish myself as an independent scientist.*当我决定追求研究生学位时，我想开发一个新的研究项目，并迅速确立自己作为一个独立科学家的地位。*2024年北京卷
+But I was unrealistically optimistic about what I could achieve.*但我对自己能实现的事情过于乐观了。*2024年北京卷
+As I began designing experiments, my committee members warned me about the challenges I would face.*当我开始设计实验时，我的委员会成员警告了我将面临的挑战。*2024年北京卷
+But my need for independence drove me to push forward with my research plan.*但我对独立的需要驱使我推进我研究计划。*2024年北京卷
+As a result, the first four years of my postgraduate career were defined by a series of failures.*结果，我的研究生生涯的前四年被一系列失败所定义。*2024年北京卷
+My adviser and I devised a somewhat unusual solution: I would spend three months in a collaborating lab to obtain specialised training.*我的导师和我设计了一个有些不寻常的解决方案：我将在一个合作实验室中花费三个月时间来获得专业培训。*2024年北京卷
+I worked extensively with other students, constantly asked questions, and helped with ongoing projects to learn everything I could.*我与其他学生广泛合作，不断提问，并帮助进行中的项目来学习一切我能学到的东西。*2024年北京卷
+Finally, I conducted an elegant experiment that would not have been possible without the help of the members in the lab.*最终，我进行了一个没有实验室成员的帮助就不可能完成的优雅实验。*2024年北京卷
+My adviser saw this experience as a groundbreaking success, emphasising the collaborating skills I acquired.*我的导师认为这次经历是一项开创性的成功，强调了我获得的协作技能。*2024年北京卷
+A few months later, when I repeated the experiment in my home lab, I produced more publishable data.*几个月后，当我在自己的实验室重复这个实验时，我产生了更多的可发表数据。*2024年北京卷
+By learning when to ask for help, I eventually found myself on the way to becoming an independent scientist.*通过学习何时寻求帮助，我最终找到了自己成为独立科学家的道路。*2024年北京卷
+`;
+
+        function searchText() {
+            const input = document.getElementById('searchInput').value.trim();
+            const results = document.getElementById('results');
+            const lines = text.split(/\r?\n/);
+            const regex = new RegExp(`(${input})`, 'gi');
+
+            if (!input) {
+                results.innerHTML = '请输入搜索词或短语';
+                return;
+            }
+
+            const matchedLines = lines.filter(line => regex.test(line));
+
+            if (matchedLines.length > 0) {
+                results.innerHTML = matchedLines.map((line, index) => {
+                    const highlightedText = line.replace(regex, '<span class="highlight">$1</span>');
+                    return `${index + 1}、<span class="audio" onclick="playAudio('${line}')">${highlightedText}</span>`;
+                }).join('<br>');
+            } else {
+                results.innerHTML = '对不起，没有找到你需要的高考真题文本';
+            }
+        }
+
+        function playAudio(text) {
+            const encodedText = encodeURIComponent(text);
+            const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodedText}&type=2`; // 2 for UK English, 1 for US English
+            new Audio(audioUrl).play();
+        }
+    </script>
+</body>
+</html>
